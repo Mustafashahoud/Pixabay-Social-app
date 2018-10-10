@@ -1,0 +1,58 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 27
+    defaultConfig {
+        resConfigs("en", "xxhdpi")
+        applicationId "com.mustafa.sar.instagramthesis"
+        minSdkVersion 15
+        targetSdkVersion 27
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        ext.alwaysUpdateBuildId = false
+        buildTypes {
+            customDebugType {
+                debuggable true
+            }
+        }
+
+    }
+    if (project.hasProperty('devBuild')) {
+
+        splits.abi.enable = false
+        splits.density.enable = false
+        aaptOptions.cruncherEnabled = false
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation "com.android.support:appcompat-v7:$supportLibraryVersion"
+    implementation 'com.android.support.constraint:constraint-layout:1.1.2'
+    // Design Library for Coordinator Layout and toolbars
+    implementation "com.android.support:design:$supportLibraryVersion"
+    //Add The BottomNaviagtionViewEx Helper for disabling the shifting mode
+    implementation 'com.github.ittianyu:BottomNavigationViewEx:1.2.4'
+    //library for circle images
+    implementation 'de.hdodenhof:circleimageview:2.2.0'
+    //Universal Image Loader
+    implementation 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
+    //RecycleView
+    implementation 'com.android.support:recyclerview-v7:27.1.1'
+    //Firebase
+    implementation 'com.google.firebase:firebase-core:16.0.3'
+    //Firebase Authentication
+    implementation 'com.google.firebase:firebase-auth:16.0.3'
+
+    //Realtime database
+    implementation 'com.google.firebase:firebase-database:16.0.1'
+}
+
+apply plugin: 'com.google.gms.google-services'

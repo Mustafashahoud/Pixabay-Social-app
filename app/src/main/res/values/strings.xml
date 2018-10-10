@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">InstagramThesis</string>
+    <string name="edit_profile_fragment">Edit Profile</string>
+    <string name="sign_out_fragment">Sign Out</string>
+
+    <!-- firebase database -->
+    <string name="db_user">user_edit_profile_info</string>
+    <string name="db_userprofileaccount">user_profile_account</string>
+
+
+</resources>
