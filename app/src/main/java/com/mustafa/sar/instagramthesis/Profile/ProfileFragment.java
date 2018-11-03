@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -17,7 +18,6 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -26,6 +26,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
+import com.mustafa.sar.instagramthesis.Home.HomeActivity;
 import com.mustafa.sar.instagramthesis.Login.LoginActivity;
 import com.mustafa.sar.instagramthesis.R;
 import com.mustafa.sar.instagramthesis.utilities.BottomNavigationViewHelper;
@@ -41,7 +42,7 @@ public class ProfileFragment extends Fragment {
     private static final String TAG = "ProfileFragment";
     private static final int ACTIVITY_NUM = 4;
 
-    private TextView mPosts, mFollowers, mFollowing, mDisplayName, mUsername, mWebsite, mDescription;
+    private TextView mPosts, mFollowers, mFollowing, mDisplayName, mUsername, mWebsite, mDescription , tvEditProfile;
     private ProgressBar mProgressBar;
     private CircleImageView mProfilePhoto;
     private GridView gridView;
@@ -58,8 +59,6 @@ public class ProfileFragment extends Fragment {
     private FirebaseDatabase mFirebaseDatabase;
     private DatabaseReference myRef;
     private FirebaseUtilities firebaseUtilities;
-
-
 
     @Nullable
     @Override
@@ -79,6 +78,7 @@ public class ProfileFragment extends Fragment {
         gridView = (GridView) view.findViewById(R.id.gridView);
         toolbar = (Toolbar) view.findViewById(R.id.profileToolBar);
         profileMenu = (ImageView) view.findViewById(R.id.profileMenu);
+        tvEditProfile = (TextView) view.findViewById(R.id.tvEditProfile);
         bottomNavigationView = (BottomNavigationViewEx) view.findViewById(R.id.bottomNavViewBar);
         mContext = getActivity();
         firebaseUtilities = new FirebaseUtilities(getActivity());
@@ -89,8 +89,8 @@ public class ProfileFragment extends Fragment {
 
         setupFirebaseAuth();
 
-
-
+        setupTvEditProfile();
+        mProgressBar.setVisibility(View.GONE);
 
 
         return view;
@@ -108,16 +108,36 @@ public class ProfileFragment extends Fragment {
         menuItem.setChecked(true);
         // menuItem.getIcon().setColorFilter(Color.parseColor("#000000"), PorterDuff.Mode.SRC_IN);
 
-
     }
+    @Override
+    public void onResume() {
+        super.onResume();
 
+        if(getView() == null){
+            return;
+        }
+
+        getView().setFocusableInTouchMode(true);
+        getView().requestFocus();
+        getView().setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK){
+                    Intent intent = new Intent(getActivity() , HomeActivity.class);
+                    startActivity(intent);
+                    return true;
+                }
+                return false;
+            }
+        });
+    }
 
     /**
      * sets the toolbar
      */
     private void setupToolbar() {
         ((ProfileActivity) getActivity()).setSupportActionBar(toolbar);
-        mProfilePhoto.setOnClickListener(new View.OnClickListener() {
+        profileMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(mContext, AccountSettingActivity.class);
@@ -128,13 +148,23 @@ public class ProfileFragment extends Fragment {
 
     }
 
+    private void setupTvEditProfile(){
+        tvEditProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent( getActivity() , AccountSettingActivity.class);
+                intent.putExtra("calling_activity" , "profile_activity");
+                startActivity(intent);
+            }
+        });
+    }
+
     ///////////////////////////*******************Firebase********************///////////////////////
 
     public void setupFirebaseAuth(){
         mAuth = FirebaseAuth.getInstance();
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         myRef = mFirebaseDatabase.getReference();
-
 
         myAuthenListener = new FirebaseAuth.AuthStateListener() {
             @Override
@@ -154,23 +184,27 @@ public class ProfileFragment extends Fragment {
 
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Log.d(TAG, "onDataChange: ");
 
-                // Retrieving the user info from database
-                // retrieveAccountUserInfo returns  the retrieved General obj
-                setProfileWidget( firebaseUtilities.retrieveAccountUserInfo(dataSnapshot));
+                //retrieve user information from the database
+                setProfileWidget(firebaseUtilities.retrieveAccountUserInfo(dataSnapshot));
 
-                // Retrieving the images
+                //retrieve images for the user in question
 
             }
-
             @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
+            public void onCancelled(DatabaseError databaseError) {
+                Log.d(TAG, "onCancelled: ");
 
             }
         });
 
     }
+
+    // Retrieving the user info from database
+    // retrieveAccountUserInfo returns  the retrieved General obj
+
 
     private void setProfileWidget(GeneralInfoUserModel generalInfoUserModel){
 
@@ -188,25 +222,20 @@ public class ProfileFragment extends Fragment {
         UniversalImageLoader.setImage(setting.getProfile_photo() , mProfilePhoto , null , "");
 
         //set the widgets Followers and Following and Posts etc ..
-
         mDisplayName.setText(setting.getDisplay_name());
         mDescription.setText(setting.getDescription());
         mFollowing.setText(String.valueOf (setting.getFollowings()));
         mFollowers.setText(String.valueOf(setting.getFollowers()));
         mPosts.setText(String.valueOf(setting.getPosts()));
         mWebsite.setText(setting.getWebsite());
-        mUsername.setText(setting.getUser_name());
-
+        mUsername.setText(setting.getUsername());
     }
 
     @Override
     public void onStart() {
         super.onStart();
-
         Log.d(TAG, "onStart: checking if the user is logged in or out");
         mAuth.addAuthStateListener(myAuthenListener);
-        // Check if user is signed in (non-null) and update UI accordingly.
-        currentUser = mAuth.getCurrentUser();
 
     }
 
@@ -217,6 +246,5 @@ public class ProfileFragment extends Fragment {
             mAuth.removeAuthStateListener(myAuthenListener);
         }
     }
-
 
 }

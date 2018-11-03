@@ -41,6 +41,7 @@ public class ProfileActivity extends AppCompatActivity {
         fragmentTransaction.replace(R.id.fragmentContainer , profileFragment);
         fragmentTransaction.addToBackStack("Profile");
         fragmentTransaction.commit();
+
     }
 
 //    /**

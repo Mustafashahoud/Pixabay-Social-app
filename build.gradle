@@ -7,9 +7,9 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.1.0'
+        classpath 'com.android.tools.build:gradle:3.2.1'
 
-        //The Google services plugin for Gradle loads the google-services.json file
+        //The Google Services plugin for Gradle loads the google-services.json file
         classpath 'com.google.gms:google-services:4.1.0'
 
         // NOTE: Do not place your application dependencies here; they belong

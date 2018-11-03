@@ -58,8 +58,9 @@ public void registerNewUserAccount(String email , String password ) {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             //after this method gets called the new user will be signed in
-                            // Sign in success,
+                            // Sign in success
                             verificationEmail();
+                           // firebaseUtilities.createNewUser(userID ,email, mUsername, "", "", "");
                             Log.d(TAG, "createUserWithEmail:success" );
                         } else if (!task.isSuccessful()) {
                             // If sign in fails, display a message to the user.
@@ -72,8 +73,8 @@ public void registerNewUserAccount(String email , String password ) {
 }
     public void verificationEmail(){
 
-        final FirebaseUser user = mAuth.getCurrentUser();
-        //final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+        final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user != null){
 
             user.sendEmailVerification()
@@ -82,15 +83,11 @@ public void registerNewUserAccount(String email , String password ) {
                         public void onComplete(@NonNull Task task) {
 
                             if (task.isSuccessful()) {
-                                Toast.makeText(mContext,
-                                        "Verification email sent to " + user.getEmail(),
-                                        Toast.LENGTH_SHORT).show();
-                            } else if (!task.isSuccessful()) {
+                                Log.d(TAG, "onComplete: The verification email has been sent to " + user.getEmail());
 
-                                Log.e(TAG, "sendEmailVerification", task.getException());
-                                Toast.makeText(mContext ,
-                                        "Failed to send verification email.",
-                                        Toast.LENGTH_SHORT).show();
+
+                            } else if (!task.isSuccessful()) {
+                                Toast.makeText(mContext , "Failed to send verification email.", Toast.LENGTH_SHORT).show();
                             }
                         }
                     });
@@ -112,7 +109,7 @@ public void registerNewUserAccount(String email , String password ) {
     public void createNewUser(String userID ,String email , String username , String description ,
                               String website , String profile_photo ) {
 
-        User user = new User( shrinkUsername(username) , email , userID , 1 );
+        User user = new User( userID , 1 , email  , shrinkUsername(username) );
 
         // Set the Object user attributes to the Database table user_edite_profile_info
         myRef.child(mContext.getString(R.string.db_user)).child(userID)
@@ -134,8 +131,6 @@ public void registerNewUserAccount(String email , String password ) {
 
 
     public boolean checkIfUserIsInUse( String userID , String username , DataSnapshot dataSnapshot){
-
-
         //here we instantiate an object of User
         User user = new User();
 
@@ -154,6 +149,8 @@ public void registerNewUserAccount(String email , String password ) {
         }
         return false;
     }
+
+
     public static String expandUsername(String username){
 
         return username.replace("." , " ");
@@ -204,8 +201,8 @@ public void registerNewUserAccount(String email , String password ) {
                     userProfileAccountSetting.setProfile_photo(ds.child(userID)
                             .getValue(UserProfileAccountSetting.class).getProfile_photo());
 
-                    userProfileAccountSetting.setUser_name(ds.child(userID)
-                            .getValue(UserProfileAccountSetting.class).getUser_name());
+                    userProfileAccountSetting.setUsername(ds.child(userID)
+                            .getValue(UserProfileAccountSetting.class).getUsername());
 
                 }catch(NullPointerException e){
                     Log.d(TAG, "retrieveAccountUserInfo: NullPointerException " + e.getMessage());
@@ -213,20 +210,54 @@ public void registerNewUserAccount(String email , String password ) {
 
             }
 
-            if (ds.getKey().equals("user_edit_profile_info")){
+          /*  if (ds.getKey().equals("user_edite_profile_info")){
 
-                user.setUsername(ds.child(userID)
-                        .getValue(User.class).getUsername());
+                try {
 
-                user.setEmail(ds.child(userID)
-                        .getValue(User.class).getEmail());
+                    user.setUsername(ds.child(userID)
+                            .getValue(User.class).getUsername());
 
-                user.setPhone(ds.child(userID)
-                        .getValue(User.class).getPhone());
+                    user.setEmail(ds.child(userID)
+                            .getValue(User.class).getEmail());
 
-                user.setUser_id(ds.child(userID)
-                        .getValue(User.class).getUser_id());
+                    user.setPhone(ds.child(userID)
+                            .getValue(User.class).getPhone());
 
+                    user.setUser_id(ds.child(userID)
+                            .getValue(User.class).getUser_id());
+
+                }
+                catch (NullPointerException e){
+
+                }
+
+            }*/
+
+            if(ds.getKey().equals("user_edite_profile_info")) {
+                Log.d(TAG, "getUserAccountSettings: users node datasnapshot: " + ds);
+
+                user.setUsername(
+                       ds.child(userID)
+                               .getValue(User.class)
+                               .getUsername()
+                );
+                user.setEmail(
+                       ds.child(userID)
+                                .getValue(User.class)
+                                .getEmail()
+                );
+                user.setPhone_number(
+                        ds.child(userID)
+                                .getValue(User.class)
+                                .getPhone_number()
+                );
+                user.setUser_id(
+                        ds.child(userID)
+                                .getValue(User.class)
+                                .getUser_id()
+                );
+
+                Log.d(TAG, "getUserAccountSettings: retrieved users information: " + user.toString());
             }
 
 
@@ -234,6 +265,20 @@ public void registerNewUserAccount(String email , String password ) {
 
             return new GeneralInfoUserModel(user , userProfileAccountSetting);
 
+    }
+
+    public void updateUsername(String username){
+        Log.d(TAG, "updateUsername: updating username to: " + username);
+
+        myRef.child(mContext.getString(R.string.db_user))
+                .child(userID)
+                .child(mContext.getString(R.string.field_username))
+                .setValue(username);
+
+        myRef.child(mContext.getString(R.string.db_userprofileaccount))
+                .child(userID)
+                .child(mContext.getString(R.string.field_username))
+                .setValue(username);
     }
 
 }

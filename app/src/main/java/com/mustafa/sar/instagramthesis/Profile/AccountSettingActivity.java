@@ -16,10 +16,22 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.mustafa.sar.instagramthesis.R;
 import com.mustafa.sar.instagramthesis.utilities.BottomNavigationViewHelper;
+import com.mustafa.sar.instagramthesis.utilities.FirebaseUtilities;
 import com.mustafa.sar.instagramthesis.utilities.SectionsStatePagerAdapter;
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
+import com.mustafa.sar.instagramthesis.utilities.UniversalImageLoader;
+import com.mustafa.sar.instagramthesis.utilities.models.GeneralInfoUserModel;
+import com.mustafa.sar.instagramthesis.utilities.models.User;
+import com.mustafa.sar.instagramthesis.utilities.models.UserProfileAccountSetting;
 
 import java.util.ArrayList;
 
@@ -32,6 +44,9 @@ public class AccountSettingActivity extends AppCompatActivity {
     RelativeLayout relLayout1;
     private static final int ACTIVITY_NUM = 4;
 
+    private static final String TAG = "AccountSettingActivity";
+
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,6 +57,7 @@ public class AccountSettingActivity extends AppCompatActivity {
         handlingBackArrowNavigation();
         setupFragment();
         setupBottomNavigationView();
+        receiveIncomingIntent();
 
 
     }
@@ -58,8 +74,18 @@ public class AccountSettingActivity extends AppCompatActivity {
             public void onClick(View v) {
                 /*Intent intent = new Intent(AccountSettingActivity.this , ProfileActivity.class);
                 startActivity(intent);*/
+                finish();
             }
         });
+
+    }
+
+    private void receiveIncomingIntent(){
+        Intent intent = getIntent();
+
+        if (intent.hasExtra("calling_activity")){
+            setupViewPager(sectionsStatePagerAdapter.getFragmentNumbers(getString(R.string.edit_profile_fragment)));
+        }
 
     }
 
@@ -70,8 +96,6 @@ public class AccountSettingActivity extends AppCompatActivity {
         options.add(getString(R.string.sign_out_fragment));
         adapter = new ArrayAdapter<String>(mContext, android.R.layout.simple_list_item_1, options);
         listView = (ListView) findViewById(R.id.lvAccountSetting);
-
-
         listView.setAdapter(adapter);
 
         //add fragments

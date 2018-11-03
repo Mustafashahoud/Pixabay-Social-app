@@ -37,7 +37,7 @@ import java.util.zip.Inflater;
 public class HomeActivity extends AppCompatActivity {
     private static final String TAG = "HomeActivity";
     private static final int ACTIVITY_NUM = 0;
-    private Context context = HomeActivity.this;
+    private Context mContext = HomeActivity.this;
     SectionsPagerAdapter mAdapter;
 
     //firebase
@@ -57,6 +57,7 @@ public class HomeActivity extends AppCompatActivity {
         initImageLoader();
         //This is for Firebase Authentication
         setupFirebaseAuth();
+
         
 
     }
@@ -69,7 +70,7 @@ public class HomeActivity extends AppCompatActivity {
 
         BottomNavigationViewEx bottomNavigationViewEx = (BottomNavigationViewEx) findViewById(R.id.bottomNavViewBar);
         BottomNavigationViewHelper.setupBottomNavigationView(bottomNavigationViewEx);
-        BottomNavigationViewHelper.enableNavigation(context, bottomNavigationViewEx);
+        BottomNavigationViewHelper.enableNavigation(mContext, bottomNavigationViewEx);
         Menu menu = bottomNavigationViewEx.getMenu();
         MenuItem menuItem = menu.getItem(ACTIVITY_NUM);
         menuItem.setChecked(true);
@@ -82,7 +83,7 @@ public class HomeActivity extends AppCompatActivity {
      * and it should be defined in HomeActivity cuz it the main activity in the app
      */
     private void initImageLoader() {
-        UniversalImageLoader universalImageLoader = new UniversalImageLoader(context);
+        UniversalImageLoader universalImageLoader = new UniversalImageLoader(mContext);
         ImageLoader.getInstance().init(universalImageLoader.getConfig());
 
     }
@@ -137,26 +138,23 @@ public class HomeActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
 
 
+
         myAuthenListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 currentUser =  firebaseAuth.getCurrentUser();
 
-
                 if (currentUser != null){
                     Log.d(TAG, "setupFirebaseAuth: User is signed in" + currentUser.getUid());
-                    //mAuth.signOut();
-
+                   //mAuth.signOut();
                 }
+                //System.out.println("Tokens revoked at: " + revocationSecond);
                 else if (currentUser == null){
                     Log.d(TAG, "setupFirebaseAuth: User is signed out" );
-                    Intent intent = new Intent(context , LoginActivity.class);
+                    Intent intent = new Intent(mContext , LoginActivity.class);
                     startActivity(intent);
 
                 }
-
-
-
             }
         };
 
@@ -171,7 +169,7 @@ public class HomeActivity extends AppCompatActivity {
         // Check if user is signed in (non-null) and update UI accordingly.
         currentUser = mAuth.getCurrentUser();
         if (currentUser == null){
-            Intent intent = new Intent(context , LoginActivity.class);
+            Intent intent = new Intent(mContext , LoginActivity.class);
             startActivity(intent);
         }
 

@@ -12,18 +12,18 @@ public class UserProfileAccountSetting {
     private long followings ;
     private long posts ;
     private String profile_photo;
-    private String user_name;
+    private String username;
     private String website;
 
     public UserProfileAccountSetting(String description, String display_name, long followers, long followings,
-                                     long posts, String profile_photo, String user_name, String website) {
+                                     long posts, String profile_photo, String username, String website) {
         this.description = description;
         this.display_name = display_name;
         this.followers = followers;
         this.followings = followings;
         this.posts = posts;
         this.profile_photo = profile_photo;
-        this.user_name = user_name;
+        this.username = username;
         this.website = website;
     }
 
@@ -79,12 +79,12 @@ public class UserProfileAccountSetting {
         this.profile_photo = profile_photo;
     }
 
-    public String getUser_name() {
-        return user_name;
+    public String getUsername() {
+        return username;
     }
 
-    public void setUser_name(String user_name) {
-        this.user_name = user_name;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getWebsite() {
@@ -104,7 +104,7 @@ public class UserProfileAccountSetting {
                 ", followings=" + followings +
                 ", posts=" + posts +
                 ", profile_photo='" + profile_photo + '\'' +
-                ", user_name='" + user_name + '\'' +
+                ", username='" + username + '\'' +
                 ", website='" + website + '\'' +
                 '}';
     }

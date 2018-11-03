@@ -152,15 +152,19 @@ public class RegisterActivity extends AppCompatActivity {
 
                             firebaseUtilities.createNewUser(userID ,email, username, "", "", "");
 
-                            Toast.makeText(mContext, "Your account has been add successfully! ", Toast.LENGTH_SHORT).show();
-                            mProgressBar.setVisibility(View.GONE);
-                            mProgressBar.setVisibility(View.GONE);
+                            Toast.makeText(mContext, "Signup successful. Sending verification email.", Toast.LENGTH_SHORT).show();
+
+                            //We have to sign the user out till they verify their email by pressing on the verification email
+                            mAuth.signOut();
 
                             //navigationToHomeActivity(RegisterActivity.this);
 
                             //It will finish the current activity and go back to the previous activity.
                             //so the user has to sign in again after verifying their email.
-                            finish();
+
+                            mProgressBar.setVisibility(View.GONE);
+                            loadingPleaseWait.setVisibility(View.GONE);
+
                         }
                         @Override
                         public void onCancelled(DatabaseError error) {
@@ -168,6 +172,7 @@ public class RegisterActivity extends AppCompatActivity {
                             Log.w(TAG, "Failed to read value.", error.toException());
                         }
                     });
+                    finish();
                 } else if (currentUser == null) {
                     Log.d(TAG, "setupFirebaseAuth: User is signed out");
 
@@ -199,24 +204,16 @@ public class RegisterActivity extends AppCompatActivity {
                 if (isEmpty(email) || isEmpty(password) || isEmpty(username)) {
                     mProgressBar.setVisibility(View.VISIBLE);
                     loadingPleaseWait.setVisibility(View.VISIBLE);
+
                     Log.d(TAG, "createNewAccount: there is a missing field");
                     Toast.makeText(mContext, "you must fill out all fields"
                             , Toast.LENGTH_SHORT).show();
-                    mProgressBar.setVisibility(View.GONE);
-                    loadingPleaseWait.setVisibility(View.GONE);
 
                 } else if (!isEmpty(email) || !isEmpty(password) || !isEmpty(username)) {
                     Log.d(TAG, "createNewAccount: all fields are filled out");
-                    mProgressBar.setVisibility(View.VISIBLE);
-                    loadingPleaseWait.setVisibility(View.VISIBLE);
+
                     //calling  registerNewUserAccountUtilMethod() for registering or signing up a new user
                     firebaseUtilities.registerNewUserAccount(email, password);
-
-                    Toast.makeText(mContext, "Authentication success, Sending verification email ... ", Toast.LENGTH_SHORT).show();
-
-                    //We have to sign the user out till they verify their email by pressing on the verification email
-                    mAuth.signOut();
-
 
                     // we had to to stop the program for 2 sec till we become able to get the authentication cuz it is gonna register
                     // the account using createUserWithEmailAndPassword() but the better way is to put inside the listener in setupFirebaseAuth
@@ -233,8 +230,7 @@ public class RegisterActivity extends AppCompatActivity {
 
                      *//*
                     */
-                    mProgressBar.setVisibility(View.GONE);
-                    loadingPleaseWait.setVisibility(View.GONE);
+
 
                 }
 
@@ -246,11 +242,6 @@ public class RegisterActivity extends AppCompatActivity {
     public static boolean isEmpty(@Nullable CharSequence str) {
         return str == null || str.length() == 0;
     }
-
-
-
-
-
 
     @Override
     public void onStart() {
