@@ -41,7 +41,7 @@
 
         </RelativeLayout>
 
-        <GridView
+       <!-- <GridView
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="40"
@@ -52,7 +52,16 @@
             android:stretchMode="none"
             android:gravity="center"
             android:layout_marginTop="1dp">
-        </GridView>
+        </GridView> -->
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:horizontalSpacing="2dp"
+            android:scrollbars="vertical">
+
+        </android.support.v7.widget.RecyclerView>
 
     </LinearLayout>
 

@@ -65,8 +65,8 @@ public class GridImageAdapter extends ArrayAdapter<String> {
 
         String imgURL = getItem(position);
 
-        ImageLoader imageLoafer = ImageLoader.getInstance();
-        imageLoafer.displayImage(append + imgURL, viewHolder.image, new ImageLoadingListener() {
+        ImageLoader imageLoader = ImageLoader.getInstance();
+        imageLoader.displayImage(append + imgURL, viewHolder.image, new ImageLoadingListener() {
             @Override
             public void onLoadingStarted(String imageUri, View view) {
                 if (viewHolder.progressBar != null) {

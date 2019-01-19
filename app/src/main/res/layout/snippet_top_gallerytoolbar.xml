@@ -29,28 +29,29 @@
 
                     <Spinner
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10sp"
-                        android:layout_marginLeft="40dp"
-                        android:layout_toRightOf="@+id/profileMenu"
+                        android:layout_height="20dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_toRightOf="@+id/closeImageView"
                         android:id="@+id/spinnerDirectory"
+                        android:text="Choose a location"
                         android:textColor="@color/black"
                         android:textSize="20dp"
-                        android:text="Gallery"
-                        android:gravity="center_vertical">
 
-                    </Spinner>
+                        />
+
+
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Next"
                         android:textSize="20dp"
-                        android:layout_alignParentRight="true"
+                        android:layout_alignParentEnd="true"
                         android:layout_centerInParent="true"
                         android:textColor="@color/blue"
                         android:layout_marginRight="20dp"
-                        android:id="@+id/nextTextView"/>
+                        android:id="@+id/nextTextView"
+                        android:layout_alignParentRight="true" />
 
 
 
