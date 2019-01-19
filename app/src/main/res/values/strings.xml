@@ -8,5 +8,9 @@
     <string name="db_userprofileaccount">user_profile_account</string>
     <string name="field_username">username</string>
 
+    <string-array name="options" >
+        <item></item>
+    </string-array>
+
 
 </resources>

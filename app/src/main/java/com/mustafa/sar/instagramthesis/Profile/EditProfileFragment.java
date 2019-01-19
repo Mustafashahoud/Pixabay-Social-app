@@ -112,14 +112,14 @@ public class EditProfileFragment extends Fragment {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
-              /*  User user = new User();
+
+ /*  User user = new User();
                 for(DataSnapshot ds:  dataSnapshot.child("").getChildren()){
                     if(ds.getKey().equals(userID)){
                         user.setUsername(ds.getValue(User.class).getUsername());
                     }
                 }
                 Log.d(TAG, "onDataChange: CURRENT USERNAME: " + user.getUsername());*/
-
               // What we wanna do is to use the Query cuz it is super slow using the children and firebase nodes
                 //So we get the user and compare it to what was loaded originally
 
@@ -136,8 +136,36 @@ public class EditProfileFragment extends Fragment {
                 }
 
                 //case2: the user changed their username therefore we need to check for uniqueness
-                else{
+                /*else{
 
+                }*/
+                String newDisplayName = displayName;
+                String oldDispalyName = mUserSetting.getUserProfileAccountSetting().getDisplay_name() ;
+                if (!oldDispalyName.equals(newDisplayName)){
+                    //Update the display name
+                    firebaseUtilities.updateUserAccountSettings(displayName, null, null, 0);
+                }
+
+                String newWebsite = website;
+                String oldWebsite = mUserSetting.getUserProfileAccountSetting().getWebsite() ;
+                if (!oldWebsite.equals(newWebsite)){
+                    //Update the website
+                    firebaseUtilities.updateUserAccountSettings(null, website, null, 0);
+                }
+
+                String newDescription = description;
+                String oldDescription = mUserSetting.getUserProfileAccountSetting().getDescription() ;
+                if (!oldDescription.equals(newDescription)){
+                    //Update the description
+                    firebaseUtilities.updateUserAccountSettings(null, null, description, 0);
+
+                }
+
+                long newPhoneNum = phoneNumber;
+                long oldPhoneNum = mUserSetting.getUser().getPhone_number() ;
+                if (newPhoneNum != oldPhoneNum ){
+                    //Update the description
+                    firebaseUtilities.updateUserAccountSettings(null, null, null, phoneNumber);
                 }
             }
 

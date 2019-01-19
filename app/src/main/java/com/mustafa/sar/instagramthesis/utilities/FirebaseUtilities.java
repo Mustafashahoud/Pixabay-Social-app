@@ -266,6 +266,46 @@ public void registerNewUserAccount(String email , String password ) {
             return new GeneralInfoUserModel(user , userProfileAccountSetting);
 
     }
+    /**
+     * Update 'user_account_settings' node for the current user
+     * @param displayName
+     * @param website
+     * @param description
+     * @param phoneNumber
+     */
+    public void updateUserAccountSettings(String displayName, String website, String description, long phoneNumber){
+
+        Log.d(TAG, "updateUserAccountSettings: updating user account settings.");
+
+        if(displayName != null){
+            myRef.child(mContext.getString(R.string.db_userprofileaccount))
+                    .child(userID)
+                    .child("display_name")
+                    .setValue(displayName);
+        }
+
+
+        if(website != null) {
+            myRef.child(mContext.getString(R.string.db_userprofileaccount))
+                    .child(userID)
+                    .child("website")
+                    .setValue(website);
+        }
+
+        if(description != null) {
+            myRef.child(mContext.getString(R.string.db_userprofileaccount))
+                    .child(userID)
+                    .child("description")
+                    .setValue(description);
+        }
+
+        if(phoneNumber != 0) {
+            myRef.child(mContext.getString(R.string.db_user))
+                    .child(userID)
+                    .child("phone_number")
+                    .setValue(phoneNumber);
+        }
+    }
 
     public void updateUsername(String username){
         Log.d(TAG, "updateUsername: updating username to: " + username);
