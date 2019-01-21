@@ -145,5 +145,8 @@ public class GalleryFragment extends Fragment {
 
         RecycleViewAdapter adapter = new RecycleViewAdapter(getActivity(), R.layout.layout_grid_imageview, "file:/", imgPaths);
         recyclerView.setAdapter(adapter);
+
+        //GridImageAdapter adapter = new GridImageAdapter(context , R.layout.layout_grid_imageview ,"",imgs);
+        //gridView.setAdapter(adapter);
     }
 }

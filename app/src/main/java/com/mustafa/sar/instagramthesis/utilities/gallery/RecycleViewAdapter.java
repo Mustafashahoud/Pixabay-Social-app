@@ -2,19 +2,15 @@ package com.mustafa.sar.instagramthesis.utilities.gallery;
 
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 
 import com.mustafa.sar.instagramthesis.R;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.assist.FailReason;
-import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
+import com.mustafa.sar.instagramthesis.utilities.UniversalImageLoader;
 
 import java.util.ArrayList;
 
@@ -24,6 +20,9 @@ public class RecycleViewAdapter extends RecyclerView.Adapter<RecycleViewAdapter.
     private int layoutResource;
     private String append;
     private ArrayList<String> imgURLs;
+    private UniversalImageLoader universalImageLoader;
+     ProgressBar progressBar;
+     SquareImageViewForScaling img;
 
     public RecycleViewAdapter(Context mContext, int layoutResource, String append, ArrayList<String> imgURLs) {
         super();
@@ -43,46 +42,50 @@ public class RecycleViewAdapter extends RecyclerView.Adapter<RecycleViewAdapter.
     @Override
     public void onBindViewHolder(final RecycleViewAdapter.ViewHolder viewHolder, int i) {
 
-        viewHolder.img.setScaleType(ImageView.ScaleType.CENTER_CROP);
+        img.setScaleType(ImageView.ScaleType.CENTER_CROP);
 
         String imgURL = getItem(i);
 
-        ImageLoader imageLoafer = ImageLoader.getInstance();
-        imageLoafer.displayImage(append + imgURL, viewHolder.img, new ImageLoadingListener() {
-            @Override
-            public void onLoadingStarted(String imageUri, View view) {
-                if (viewHolder.progressBar != null) {
-                    viewHolder.progressBar.setVisibility(View.VISIBLE);
+        universalImageLoader = new UniversalImageLoader(mContext);
 
-                }
+        universalImageLoader.setImage(  imgURL, img, progressBar, append );
 
-            }
-
-            @Override
-            public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
-                if (viewHolder.progressBar != null) {
-                    viewHolder.progressBar.setVisibility(View.GONE);
-
-                }
-
-            }
-
-            @Override
-            public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
-                if (viewHolder.progressBar != null) {
-                    viewHolder.progressBar.setVisibility(View.GONE);
-                }
-
-            }
-
-            @Override
-            public void onLoadingCancelled(String imageUri, View view) {
-                if (viewHolder.progressBar != null) {
-                    viewHolder.progressBar.setVisibility(View.GONE);
-                }
-
-            }
-        });
+//        ImageLoader imageLoafer = ImageLoader.getInstance();
+//        imageLoafer.displayImage(append + imgURL, img, new ImageLoadingListener() {
+//            @Override
+//            public void onLoadingStarted(String imageUri, View view) {
+//                if (progressBar != null) {
+//                    progressBar.setVisibility(View.VISIBLE);
+//
+//                }
+//
+//            }
+//
+//            @Override
+//            public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
+//                if (progressBar != null) {
+//                    progressBar.setVisibility(View.GONE);
+//
+//                }
+//
+//            }
+//
+//            @Override
+//            public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+//                if (progressBar != null) {
+//                    progressBar.setVisibility(View.GONE);
+//                }
+//
+//            }
+//
+//            @Override
+//            public void onLoadingCancelled(String imageUri, View view) {
+//                if (progressBar != null) {
+//                    progressBar.setVisibility(View.GONE);
+//                }
+//
+//            }
+//        });
 
     }
 
@@ -96,8 +99,8 @@ public class RecycleViewAdapter extends RecyclerView.Adapter<RecycleViewAdapter.
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        private ProgressBar progressBar;
-        private SquareImageViewForScaling img;
+//        private ProgressBar progressBar;
+//        private SquareImageViewForScaling img;
 
         public ViewHolder(View view) {
             super(view);

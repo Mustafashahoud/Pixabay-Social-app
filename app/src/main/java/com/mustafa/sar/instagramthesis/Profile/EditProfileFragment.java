@@ -27,7 +27,6 @@ import com.mustafa.sar.instagramthesis.utilities.UniversalImageLoader;
 import com.mustafa.sar.instagramthesis.utilities.models.GeneralInfoUserModel;
 import com.mustafa.sar.instagramthesis.utilities.models.User;
 import com.mustafa.sar.instagramthesis.utilities.models.UserProfileAccountSetting;
-import com.nostra13.universalimageloader.core.ImageLoader;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
