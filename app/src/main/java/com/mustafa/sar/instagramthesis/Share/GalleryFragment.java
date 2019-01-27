@@ -1,6 +1,5 @@
 package com.mustafa.sar.instagramthesis.Share;
 
-import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -21,17 +20,19 @@ import android.widget.TextView;
 import com.mustafa.sar.instagramthesis.R;
 import com.mustafa.sar.instagramthesis.utilities.FileDirectory;
 import com.mustafa.sar.instagramthesis.utilities.HelperForGettingContentOfDirectories;
+import com.mustafa.sar.instagramthesis.utilities.UniversalImageLoader;
 import com.mustafa.sar.instagramthesis.utilities.gallery.EqualSpacingItemDecoration;
 import com.mustafa.sar.instagramthesis.utilities.gallery.RecycleViewAdapter;
 
 import java.util.ArrayList;
 
-public class GalleryFragment extends Fragment {
+public class GalleryFragment extends Fragment  {
     private static final String TAG = "GalleryFragment";
     private GridView gridView;
     private ProgressBar mProgressBar;
     private ImageView galleryImage;
     private Spinner spinner;
+    ArrayList<String> imgPaths;
 
     //Constants
     private static final String mAppend  =  "file:/";
@@ -139,14 +140,28 @@ public class GalleryFragment extends Fragment {
         DividerItemDecoration decoration2 = new DividerItemDecoration(context, DividerItemDecoration.VERTICAL );
         recyclerView.addItemDecoration(decoration2);*/
 
-        RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getActivity(), 3);
+        RecyclerView.LayoutManager layoutManager = new  GridLayoutManager(getActivity(), 3);
         recyclerView.setLayoutManager(layoutManager);
-        ArrayList<String> imgPaths = HelperForGettingContentOfDirectories.getFilesPaths(selectedPath);
+         imgPaths = HelperForGettingContentOfDirectories.getFilesPaths(selectedPath);
 
-        RecycleViewAdapter adapter = new RecycleViewAdapter(getActivity(), R.layout.layout_grid_imageview, "file:/", imgPaths);
+        RecycleViewAdapter adapter = new RecycleViewAdapter(getActivity(), R.layout.layout_grid_imageview, "file:/",
+                imgPaths, new RecycleViewAdapter.CustomOnItemClickListener() {
+            @Override
+            public void onClick(View view, int position) {
+                //Listener for showing the selected pic form the gallery
+                // pass the view and position of the clicked items
+                UniversalImageLoader.setImage(imgPaths.get(position), galleryImage, mProgressBar, mAppend);
+            }
+        });
         recyclerView.setAdapter(adapter);
 
+        //IN CASE we wanna use gridView with ViewHoler instead of RecyclerView
         //GridImageAdapter adapter = new GridImageAdapter(context , R.layout.layout_grid_imageview ,"",imgs);
         //gridView.setAdapter(adapter);
+
+        //Populate the first big image view in the fragment_gallery layout when the gallery fragment is inflated
+        UniversalImageLoader.setImage(imgPaths.get(0), galleryImage, mProgressBar, mAppend);
+
     }
+
 }
