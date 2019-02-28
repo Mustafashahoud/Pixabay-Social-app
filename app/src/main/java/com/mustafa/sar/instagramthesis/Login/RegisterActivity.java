@@ -1,7 +1,6 @@
 package com.mustafa.sar.instagramthesis.Login;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -21,9 +20,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.mustafa.sar.instagramthesis.Home.HomeActivity;
 import com.mustafa.sar.instagramthesis.R;
-import com.mustafa.sar.instagramthesis.utilities.DelayUtil;
 import com.mustafa.sar.instagramthesis.utilities.FirebaseUtilities;
 
 import java.util.Date;

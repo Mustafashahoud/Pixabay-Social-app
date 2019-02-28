@@ -19,7 +19,7 @@ import static android.support.v4.provider.FontsContractCompat.FontRequestCallbac
 
 public class VideoFragment extends Fragment {
     private static final String TAG = "VideoFragment";
-    private static final int FRAGMENT_VIDEO_NUM = 1;
+    private static final int FRAGMENT_VIDEO_NUM = 2;
     /*
     * The integer argument is a "request code" that identifies your request.
     * When you receive the result Intent, the callback provides the same request code

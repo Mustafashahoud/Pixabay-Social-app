@@ -24,33 +24,20 @@
                         android:layout_centerVertical="true"
                         android:layout_marginRight="20dp"
                         android:layout_marginEnd="20dp"
-                        android:src="@drawable/ic_close"
-                        android:id="@+id/closeImageView"/>
-
-                    <Spinner
-                        android:layout_width="wrap_content"
-                        android:layout_height="20dp"
-                        android:layout_marginTop="10dp"
-                        android:layout_toRightOf="@+id/closeImageView"
-                        android:id="@+id/spinnerDirectory"
-                        android:text="Choose a location"
-                        android:textColor="@color/black"
-                        android:textSize="20dp"
-
-                        />
-
+                        android:src="@drawable/ic_backarrow"
+                        android:id="@+id/backarrow"/>
 
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Next"
+                        android:text="Share"
                         android:textSize="20dp"
                         android:layout_alignParentEnd="true"
                         android:layout_centerInParent="true"
                         android:textColor="@drawable/text_color"
                         android:layout_marginRight="20dp"
-                        android:id="@+id/nextTextView"
+                        android:id="@+id/shareTextView"
                         android:layout_alignParentRight="true" />
 
 

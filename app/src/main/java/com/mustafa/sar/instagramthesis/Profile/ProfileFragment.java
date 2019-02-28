@@ -142,6 +142,7 @@ public class ProfileFragment extends Fragment {
             public void onClick(View v) {
                 Intent intent = new Intent(mContext, AccountSettingActivity.class);
                 startActivity(intent);
+                getActivity().finish();
 
             }
         });
@@ -246,5 +247,4 @@ public class ProfileFragment extends Fragment {
             mAuth.removeAuthStateListener(myAuthenListener);
         }
     }
-
 }

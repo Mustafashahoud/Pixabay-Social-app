@@ -44,7 +44,7 @@ public class SectionsStatePagerAdapter extends FragmentStatePagerAdapter {
      * @param fragmentName
      * @return
      */
-    public Integer getFragmentNumbers(String fragmentName) {
+    public Integer getFragmentNumber(String fragmentName) {
         if (mFragmentNumbers.containsKey(fragmentName)) {
 
             return mFragmentNumbers.get(fragmentName);

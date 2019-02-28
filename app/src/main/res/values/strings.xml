@@ -8,6 +8,10 @@
     <string name="db_userprofileaccount">user_profile_account</string>
     <string name="field_username">username</string>
 
+    <!-- Pic type-->
+    <string name="normal_photo">normal_photo</string>
+    <string name="profile_photo">profile_photo</string>
+
     <string-array name="options" >
         <item></item>
     </string-array>

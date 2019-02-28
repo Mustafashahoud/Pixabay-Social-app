@@ -1,5 +1,6 @@
 package com.mustafa.sar.instagramthesis.Profile;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -21,7 +22,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.internal.InternalTokenResult;
 import com.mustafa.sar.instagramthesis.R;
+import com.mustafa.sar.instagramthesis.Share.ShareActivity;
 import com.mustafa.sar.instagramthesis.utilities.FirebaseUtilities;
 import com.mustafa.sar.instagramthesis.utilities.UniversalImageLoader;
 import com.mustafa.sar.instagramthesis.utilities.models.GeneralInfoUserModel;
@@ -82,6 +85,23 @@ public class EditProfileFragment extends Fragment {
         backArrowListener();
 
         setupFirebaseAuth();
+
+        mChangeProfilePhoto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Here we will be navigated to the Share Activity but we need a way to differentiate
+                // weather we are coming by pressing Change Profile photo text view or not
+                // Cuz we wanna know if it is a profile photo or normal photo
+                // we will use a flag to do so.
+                Intent intent = new Intent(getActivity(), ShareActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT); // this flag is a number but NOT zero
+                getActivity().startActivity(intent);
+                getActivity().finish();
+
+
+
+            }
+        });
 
         ImageView checkMark = (ImageView) view.findViewById(R.id.checkMark);
         checkMark.setOnClickListener(new View.OnClickListener() {

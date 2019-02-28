@@ -26,6 +26,31 @@
 
         </ListView>
 
+        <com.emredavarci.circleprogressbar.CircleProgressBar xmlns:cpb="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/circleprogressbar"
+            android:layout_width="300dp"
+            android:layout_height="300dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginStart="75dp"
+            android:layout_marginLeft="75dp"
+            android:layout_marginEnd="117dp"
+            android:layout_marginRight="117dp"
+            android:layout_centerVertical="true"
+            cpb:backgroundColor="#e7b330"
+            cpb:backgroundWidth="8"
+            cpb:maxValue="100"
+            cpb:prefix=""
+            cpb:progressColor="#e76130"
+            cpb:progressText="Uploading:"
+            cpb:progressTextColor="#f9916b"
+            cpb:roundedCorners="true"
+            cpb:strokeWidth="10"
+            cpb:suffix="%"
+            cpb:textSize="10sp" />
+
 
 
 

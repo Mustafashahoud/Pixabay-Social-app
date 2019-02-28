@@ -19,7 +19,7 @@ import static android.support.v4.provider.FontsContractCompat.FontRequestCallbac
 
 public class PhotoFragment extends Fragment {
     private static final String TAG = "PhotoFragment";
-    private static final int FRAGMENT_PHOTO_NUM = 0;
+    private static final int FRAGMENT_PHOTO_NUM = 1;
     /*
     * The integer argument is a "request code" that identifies your request.
     * When you receive the result Intent, the callback provides the same request code

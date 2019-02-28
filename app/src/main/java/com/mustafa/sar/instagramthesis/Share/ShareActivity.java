@@ -48,9 +48,13 @@ public class ShareActivity extends AppCompatActivity {
 
     }
 
+    public int getIntentFlag(){
+        return getIntent().getFlags();
+    }
+
     /**
      *
-     * @return
+     * @return  CurrentTabNumber
      */
     public int getCurrentTabNumber(){
         return  mViewPager.getCurrentItem();
@@ -91,18 +95,19 @@ public class ShareActivity extends AppCompatActivity {
     }
     private void setupViewPager(){
         SectionsPagerAdapter adapter = new SectionsPagerAdapter(getSupportFragmentManager());
+        adapter.addFragment(new GalleryFragment());
         adapter.addFragment(new PhotoFragment());
         adapter.addFragment(new VideoFragment());
-        adapter.addFragment(new GalleryFragment());
+        ;
         mViewPager = (ViewPager) findViewById(R.id.containerViewPager);
         mViewPager.setAdapter(adapter);
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.bottomTabs);
         tabLayout.setupWithViewPager(mViewPager);
 
-        tabLayout.getTabAt(0).setText("PHOTO");
-        tabLayout.getTabAt(1).setText("VIDEO");
-        tabLayout.getTabAt(2).setText("GALLERY");
+        tabLayout.getTabAt(0).setText("GALLERY");
+        tabLayout.getTabAt(1).setText("PHOTO");
+        tabLayout.getTabAt(2).setText("VIDEO");
     }
     /**
      * verify all the permission passed to the array

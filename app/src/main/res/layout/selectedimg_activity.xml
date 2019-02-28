@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/scrollView">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:id="@+id/relLayout1">
+
+                <include layout="@layout/snippet_top_selectedimgtoolbar"/>
+                <!-- 1)) toolbar -->
+            </RelativeLayout>
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/relLayout2"
+                android:layout_below="@id/relLayout1">
+
+                <ImageView
+                    android:layout_width="75dp"
+                    android:layout_height="75dp"
+                    android:id="@+id/selectedImgFinal"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="20dp"/>
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@+id/selectedImgFinal"
+                    android:layout_marginLeft="20dp"
+                    android:hint="Write Something..."
+                    android:layout_centerInParent="true"
+                    android:id="@+id/description"
+                    />
+
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@id/relLayout2">
+
+                <com.emredavarci.circleprogressbar.CircleProgressBar xmlns:cpb="http://schemas.android.com/apk/res-auto"
+                    android:id="@+id/circleprogressbar"
+                    android:layout_width="300dp"
+                    android:layout_height="300dp"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginStart="75dp"
+                    android:layout_marginLeft="75dp"
+                    android:layout_marginEnd="117dp"
+                    android:layout_marginRight="117dp"
+                    cpb:backgroundColor="#e7b330"
+                    cpb:backgroundWidth="8"
+                    cpb:maxValue="100"
+                    cpb:prefix=""
+                    cpb:progressColor="#e76130"
+                    cpb:progressText="Uploading:"
+                    cpb:progressTextColor="#f9916b"
+                    cpb:roundedCorners="true"
+                    cpb:strokeWidth="10"
+                    cpb:suffix="%"
+                    cpb:textSize="10sp" />
+
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+    </ScrollView>
+
+
+</RelativeLayout>

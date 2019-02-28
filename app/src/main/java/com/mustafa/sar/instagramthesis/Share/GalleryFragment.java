@@ -1,5 +1,6 @@
 package com.mustafa.sar.instagramthesis.Share;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -17,6 +18,7 @@ import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.mustafa.sar.instagramthesis.Profile.AccountSettingActivity;
 import com.mustafa.sar.instagramthesis.R;
 import com.mustafa.sar.instagramthesis.utilities.FileDirectory;
 import com.mustafa.sar.instagramthesis.utilities.HelperForGettingContentOfDirectories;
@@ -26,16 +28,18 @@ import com.mustafa.sar.instagramthesis.utilities.gallery.RecycleViewAdapter;
 
 import java.util.ArrayList;
 
-public class GalleryFragment extends Fragment  {
+public class GalleryFragment extends Fragment {
     private static final String TAG = "GalleryFragment";
     private GridView gridView;
     private ProgressBar mProgressBar;
     private ImageView galleryImage;
     private Spinner spinner;
-    ArrayList<String> imgPaths;
+    private ArrayList<String> imgPaths;
+
+    public String selectedImg;
 
     //Constants
-    private static final String mAppend  =  "file:/";
+    private static final String mAppend = "file:/";
 
     RecyclerView recyclerView;
 
@@ -47,6 +51,7 @@ public class GalleryFragment extends Fragment  {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_gallery, container, false);
         Log.d(TAG, "onCreateView: started.");
+        System.out.println();
 
         galleryImage = (ImageView) view.findViewById(R.id.galleryImageView);
         gridView = (GridView) view.findViewById(R.id.gridView);
@@ -70,18 +75,37 @@ public class GalleryFragment extends Fragment  {
             @Override
             public void onClick(View v) {
                 Log.d(TAG, "onClick: navigating to the final share screen.");
+                if (isRootTask()){ // True means that we did NOT from EditProfile by pressing change profile Photo
+                    Intent selectedImgIntent = new Intent(getActivity(), SelectedImgActivity.class);
+                    selectedImgIntent.putExtra("SelectedImg", selectedImg);
+                    startActivity(selectedImgIntent);
+                }else{
+                    Intent selectedImgIntent = new Intent(getActivity(), AccountSettingActivity.class);
+                    selectedImgIntent.putExtra("SelectedImg", selectedImg);
+                    selectedImgIntent.putExtra("return_to_fragment", getString(R.string.edit_profile_fragment));
+                    startActivity(selectedImgIntent);
+                    getActivity().fileList();
+                }
+
             }
         });
         init();
         return view;
     }
 
-    private void init(){
+    public boolean isRootTask(){
+        if (((ShareActivity)getActivity()).getIntentFlag() == 0){
+            return  true;
+        }
+        else return false;
+    }
+
+    private void init() {
         //Checking other folders inside /storage/emulated/0/pictures
 
         FileDirectory fileDirectory = new FileDirectory();
         //To add all the folders "Directories" inside the /storage/emulated/0/pictures
-        if (HelperForGettingContentOfDirectories.getDirectoryPaths(fileDirectory.PICTURES) != null){
+        if (HelperForGettingContentOfDirectories.getDirectoryPaths(fileDirectory.PICTURES) != null) {
             //Just for showing in the spinner
             directoryNames.addAll(HelperForGettingContentOfDirectories.getDirectoryNames(fileDirectory.PICTURES));
             //the actual paths
@@ -102,6 +126,7 @@ public class GalleryFragment extends Fragment  {
 
                 setupRecycleView(directories.get(position));
             }
+
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
             }
@@ -130,7 +155,7 @@ public class GalleryFragment extends Fragment  {
          *the first one is by creating a new class that extends RecyclerView.ItemDecoration and overriding the method
          * getItemOffsets()
          * */
-        recyclerView.addItemDecoration(new EqualSpacingItemDecoration(1, EqualSpacingItemDecoration.GRID));
+        recyclerView.addItemDecoration(new EqualSpacingItemDecoration(3, EqualSpacingItemDecoration.GRID));
 
         /*
          * OR by using the new class DividerItemDecoration */
@@ -140,9 +165,9 @@ public class GalleryFragment extends Fragment  {
         DividerItemDecoration decoration2 = new DividerItemDecoration(context, DividerItemDecoration.VERTICAL );
         recyclerView.addItemDecoration(decoration2);*/
 
-        RecyclerView.LayoutManager layoutManager = new  GridLayoutManager(getActivity(), 3);
+        RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getActivity(), 3);
         recyclerView.setLayoutManager(layoutManager);
-         imgPaths = HelperForGettingContentOfDirectories.getFilesPaths(selectedPath);
+        imgPaths = HelperForGettingContentOfDirectories.getFilesPaths(selectedPath);
 
         RecycleViewAdapter adapter = new RecycleViewAdapter(getActivity(), R.layout.layout_grid_imageview, "file:/",
                 imgPaths, new RecycleViewAdapter.CustomOnItemClickListener() {
@@ -151,6 +176,7 @@ public class GalleryFragment extends Fragment  {
                 //Listener for showing the selected pic form the gallery
                 // pass the view and position of the clicked items
                 UniversalImageLoader.setImage(imgPaths.get(position), galleryImage, mProgressBar, mAppend);
+                selectedImg = imgPaths.get(position);
             }
         });
         recyclerView.setAdapter(adapter);
@@ -161,6 +187,7 @@ public class GalleryFragment extends Fragment  {
 
         //Populate the first big image view in the fragment_gallery layout when the gallery fragment is inflated
         UniversalImageLoader.setImage(imgPaths.get(0), galleryImage, mProgressBar, mAppend);
+        selectedImg = imgPaths.get(0);
 
     }
 

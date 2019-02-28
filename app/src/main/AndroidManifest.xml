@@ -30,6 +30,7 @@
         <activity android:name=".Profile.AccountSettingActivity"></activity>
         <activity android:name=".Login.LoginActivity"></activity>
         <activity android:name=".Login.RegisterActivity"></activity>
+        <activity android:name=".Share.SelectedImgActivity"></activity>
     </application>
 
 </manifest>
