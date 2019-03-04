@@ -3,10 +3,10 @@ package com.mustafa.sar.instagramthesis.utilities;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.ActivityCompat;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
@@ -38,6 +38,7 @@ import com.mustafa.sar.instagramthesis.utilities.models.Photo;
 import com.mustafa.sar.instagramthesis.utilities.models.User;
 import com.mustafa.sar.instagramthesis.utilities.models.UserProfileAccountSetting;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -91,6 +92,7 @@ public class FirebaseUtilities {
         }
 
     }
+
     /**
      * This methods Registers or signs up a new user to firebase Authentication
      *
@@ -376,7 +378,7 @@ public class FirebaseUtilities {
      * I am gonna need to name the photos {photo1, photo2, .....}
      *
      * @param dataSnapshot the data snapshot
-     * @return the int
+     * @return the count
      */
     public int getCountPhotos(DataSnapshot dataSnapshot) {
         int count = 0;
@@ -389,26 +391,27 @@ public class FirebaseUtilities {
         return count;
     }
 
-    private String getTimeStamp(){
+    private String getTimeStamp() {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-mm-dd'T'hh:mm:ss'Z'", Locale.US);
         simpleDateFormat.setTimeZone(TimeZone.getTimeZone("Europe/Budapest"));
-        return  simpleDateFormat.format(new Date());
+        return simpleDateFormat.format(new Date());
     }
-    public static String getTags(String string){
-        if(string.indexOf("#") > 0){
+
+    public static String getTags(String string) {
+        if (string.indexOf("#") > 0) {
             StringBuilder sb = new StringBuilder();
             char[] charArray = string.toCharArray();
             boolean foundWord = false;
-            for( char c : charArray){
-                if(c == '#'){
+            for (char c : charArray) {
+                if (c == '#') {
                     foundWord = true;
                     sb.append(c);
-                }else{
-                    if(foundWord){
+                } else {
+                    if (foundWord) {
                         sb.append(c);
                     }
                 }
-                if(c == ' ' ){
+                if (c == ' ') {
                     foundWord = false;
                 }
             }
@@ -417,9 +420,15 @@ public class FirebaseUtilities {
         }
         return string;
     }
+    /* TODO Clean this method and change the circlePrgressBar it is shitty */
 
-
-    public void savePhotoToDatabase (String description, String photoStringUrl){
+    /**
+     * Save normal photo to database.
+     *
+     * @param description    the description
+     * @param photoStringUrl the photo string url
+     */
+    public void savePhotoToDatabase(String description, String photoStringUrl) {
 
         String photoKey = myRef.child("user_photos").push().getKey();
         String user_id = FirebaseAuth.getInstance().getCurrentUser().getUid();
@@ -437,14 +446,22 @@ public class FirebaseUtilities {
         myRef.child("photos").child(photoKey).setValue(photo);
     }
 
-    public void saveProfilePhotoToDatabase(String url){
+    public void saveProfilePhotoToDatabase(String url) {
         String user_id = FirebaseAuth.getInstance().getCurrentUser().getUid();
         myRef.child("user_profile_account").child(user_id).child("profile_photo").setValue(url);
     }
 
-    public void uploadPhoto(String picType, final String description, int photoCount, String url) {
+    /**
+     * Uploads photo using url.
+     *
+     * @param picType     the pic type
+     * @param description the description
+     * @param photoCount  the photo count
+     * @param url         the url
+     */
+    public void uploadPhotoUsingUrlUsingUrl(String picType, final String description, int photoCount, String url) {
 
-        final FileDirectory fd = new FileDirectory(); //fd.STORAGE_PHOTO_PATH --> photos/users
+        final FileDirectory fd = new FileDirectory(); //fd.STORAGE_PHOTO_PATH --> photos/users/
 
         if (picType.equals(activity.getString(R.string.normal_photo))) {
 
@@ -462,7 +479,7 @@ public class FirebaseUtilities {
                     .build();
 
             final StorageReference ref = storageRef.child(fd.STORAGE_PHOTO_PATH + user_id + "/Photo" + (photoCount + 1));
-            UploadTask uploadTask = ref.putFile(file , metadata);
+            UploadTask uploadTask = ref.putFile(file, metadata);
 
             // Listen for state changes, errors, and completion of the upload.
             uploadTask.addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
@@ -478,11 +495,6 @@ public class FirebaseUtilities {
                         circleProgressBar.setVisibility(View.VISIBLE);
                         i = progress;
                     }
-
-                    ((AccountSettingActivity)activity).setupViewPager(
-                            ((AccountSettingActivity)activity).sectionsStatePagerAdapter.getFragmentNumber(
-                                    activity.getString(R.string.edit_profile_fragment)));
-
 
                 }
             }).addOnPausedListener(new OnPausedListener<UploadTask.TaskSnapshot>() {
@@ -503,9 +515,11 @@ public class FirebaseUtilities {
             }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    circleProgressBar = activity.findViewById(R.id.circleprogressbar);
                     circleProgressBar.setVisibility(View.GONE);
                     Log.d(TAG, "onSuccess: The photo is being uploaded");
                     Toast.makeText(activity, "The photo has been uploaded successfully", Toast.LENGTH_SHORT).show();
+
                     //
                 }
             }).continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
@@ -523,22 +537,22 @@ public class FirebaseUtilities {
                 public void onComplete(@NonNull Task<Uri> task) {
                     if (task.isSuccessful()) {
                         Uri downloadUri = task.getResult();
-                        if (downloadUri != null){
+                        if (downloadUri != null) {
                             String photoStringUrl = downloadUri.toString();
                             Log.d(TAG, "onComplete: Upload " + photoStringUrl);
 
                             //Inserting the photo to database
                             savePhotoToDatabase(description, photoStringUrl);
 
-                            //Navigating to Home Screen Activity
-                            Intent intent = new Intent(activity , HomeActivity.class);
+                            //Navigating to the Home
+                            Intent intent = new Intent(activity, HomeActivity.class);
                             activity.startActivity(intent);
                         }
                     }
                 }
             });
 
- /***PPPRRRROOOOOFFFFFIIIILLLLEEEE PPPHHHOOOOTTTTOOOO**/
+            /***PPPRRRROOOOOFFFFFIIIILLLLEEEE PPPHHHOOOOTTTTOOOO**/
 
         } else if (picType.equals(activity.getString(R.string.profile_photo))) {
 
@@ -587,6 +601,7 @@ public class FirebaseUtilities {
                     // test the errorCode and errorMessage, and handle accordingly
                     Log.d(TAG, "onSuccess: The photo has NOT been uploaded" + errorCode + errorMessage);
                     Toast.makeText(activity, "Sorry the photo has not been uploaded .. Please Try again", Toast.LENGTH_SHORT);
+                    circleProgressBar = (activity).findViewById(R.id.circleprogressbar);
                     circleProgressBar.setVisibility(View.GONE);
                 }
             }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
@@ -594,11 +609,9 @@ public class FirebaseUtilities {
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                     Log.d(TAG, "onSuccess: The photo is being uploaded");
                     Toast.makeText(activity, "The photo has been uploaded successfully", Toast.LENGTH_SHORT).show();
+                    circleProgressBar = (activity).findViewById(R.id.circleprogressbar);
                     circleProgressBar.setVisibility(View.GONE);
-                    ((AccountSettingActivity)activity).setupViewPager(
-                            ((AccountSettingActivity)activity).sectionsStatePagerAdapter.getFragmentNumber(
-                                    activity.getString(R.string.edit_profile_fragment)));
-                    //
+
                 }
             }).continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
                 @Override
@@ -615,12 +628,17 @@ public class FirebaseUtilities {
                 public void onComplete(@NonNull Task<Uri> task) {
                     if (task.isSuccessful()) {
                         Uri downloadUri = task.getResult();
-                        if (downloadUri != null){
+                        if (downloadUri != null) {
                             String photoStringUrl = downloadUri.toString();
                             Log.d(TAG, "onComplete: Upload " + photoStringUrl);
 
-                            //Inserting the profile photo into database {user_profile_account}
+                            //Inserting the photo to database
                             saveProfilePhotoToDatabase(photoStringUrl);
+
+                            ((AccountSettingActivity) activity).setupViewPager(
+                                    ((AccountSettingActivity) activity).sectionsStatePagerAdapter.getFragmentNumber(
+                                            activity.getString(R.string.edit_profile_fragment)));
+                            //
                         }
                     }
                 }
@@ -629,5 +647,67 @@ public class FirebaseUtilities {
         }
 
     }
+
+    /**
+     * Upload photo using url using bitmap.
+     *
+     * @param bitmap the bitmap
+     */
+    public void uploadPhotoUsingUrlUsingBitmap(Bitmap bitmap) {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        byte[] data = baos.toByteArray();
+        //Uri file = Uri.fromFile(new File(String.valueOf(baos)));
+
+        final FileDirectory fd = new FileDirectory(); //fd.STORAGE_PHOTO_PATH --> photos/users
+            String user_id = "";
+
+            if (FirebaseAuth.getInstance().getCurrentUser().getUid() != null) {
+                user_id = FirebaseAuth.getInstance().getCurrentUser().getUid();
+            }
+            //photos/users/user_id/Photo{countPhoto+1}
+
+            final StorageReference ref = storageRef.child(fd.STORAGE_PHOTO_PATH + user_id + "/profile_photo");
+
+            UploadTask uploadTask = ref.putBytes(data);
+            uploadTask.addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception exception) {
+                    // Handle unsuccessful uploads.
+                    Toast.makeText(activity, "Sorry the photo has not been uploaded .. Please Try again", Toast.LENGTH_SHORT);
+                    circleProgressBar.setVisibility(View.GONE);
+                }
+            }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
+                    taskSnapshot.getError();
+                    float progress = (float) ((100.0 * taskSnapshot.getBytesTransferred()) / taskSnapshot.getTotalByteCount());
+                    float i = 0;
+                    circleProgressBar = (activity).findViewById(R.id.circleprogressbar);
+                    circleProgressBar.setProgress(progress);
+                    while (progress - 15 > i) {
+                        circleProgressBar.setSuffix(progress + "%");
+                        circleProgressBar.setVisibility(View.VISIBLE);
+                        i = progress;
+                    }
+                }
+            }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    circleProgressBar.setVisibility(View.GONE);
+                    Toast.makeText(activity, "The photo has been uploaded successfully", Toast.LENGTH_SHORT).show();
+                    ((AccountSettingActivity) activity).setupViewPager(
+                            ((AccountSettingActivity) activity).sectionsStatePagerAdapter.getFragmentNumber(
+                                    activity.getString(R.string.edit_profile_fragment)));
+
+                }
+            }).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
+                   // Uri uri = (Uri) task.getResult();
+                }
+            });
+        }
+
 
 }

@@ -29,21 +29,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.OnPausedListener;
-import com.google.firebase.storage.OnProgressListener;
-import com.google.firebase.storage.StorageException;
-import com.google.firebase.storage.StorageMetadata;
 import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
-import com.mustafa.sar.instagramthesis.Home.HomeActivity;
 import com.mustafa.sar.instagramthesis.R;
-import com.mustafa.sar.instagramthesis.utilities.FileDirectory;
 import com.mustafa.sar.instagramthesis.utilities.FirebaseUtilities;
 import com.mustafa.sar.instagramthesis.utilities.UniversalImageLoader;
-
-import java.io.File;
-
-import static android.content.ContentValues.TAG;
 
 public class SelectedImgActivity extends AppCompatActivity {
 
@@ -119,7 +108,7 @@ public class SelectedImgActivity extends AppCompatActivity {
                 String  description = descriptionEditText.getText().toString();
 
 
-                firebaseUtilities.uploadPhoto(getString(R.string.normal_photo), description, countPhoto, selectedImgPath);
+                firebaseUtilities.uploadPhotoUsingUrlUsingUrl(getString(R.string.normal_photo), description, countPhoto, selectedImgPath);
 
             }
         });

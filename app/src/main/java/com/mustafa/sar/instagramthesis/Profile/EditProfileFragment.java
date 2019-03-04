@@ -78,7 +78,7 @@ public class EditProfileFragment extends Fragment {
         ////////
 
         //to retrieve imageView profile photo
-        mProfilePhoto = (ImageView) view.findViewById(R.id.profile_photo);
+        //mProfilePhoto = (ImageView) view.findViewById(R.id.profile_photo);
 
         backArrow = (ImageView) view.findViewById(R.id.backArrow);
 
@@ -242,7 +242,6 @@ public class EditProfileFragment extends Fragment {
         User user = userSettings.getUser();
         UserProfileAccountSetting settings = userSettings.getUserProfileAccountSetting();
         mUserSetting = userSettings;
-
         UniversalImageLoader.setImage(settings.getProfile_photo(), mProfilePhoto, null, "");
         mDisplayName.setText(settings.getDisplay_name());
         mUsername.setText(settings.getUsername());
