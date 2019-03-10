@@ -184,10 +184,15 @@ public class GalleryFragment extends Fragment {
         //IN CASE we wanna use gridView with ViewHoler instead of RecyclerView
         //GridImageAdapter adapter = new GridImageAdapter(context , R.layout.layout_grid_imageview ,"",imgs);
         //gridView.setAdapter(adapter);
+        try {
+            //Populate the first big image view in the fragment_gallery layout when the gallery fragment is inflated
+            UniversalImageLoader.setImage(imgPaths.get(0), galleryImage, mProgressBar, mAppend);
+            selectedImg = imgPaths.get(0);
+        }catch (ArrayIndexOutOfBoundsException e){
+            Log.d(TAG, "setupRecycleView:  ArrayIndexOutOfBoundsException" +e.getMessage());
+        }
 
-        //Populate the first big image view in the fragment_gallery layout when the gallery fragment is inflated
-        UniversalImageLoader.setImage(imgPaths.get(0), galleryImage, mProgressBar, mAppend);
-        selectedImg = imgPaths.get(0);
+
 
     }
 

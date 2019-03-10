@@ -50,8 +50,10 @@ public class SelectedImgActivity extends AppCompatActivity {
 
 
     private static final String mAppend = "file:/";
-
+    /*Photo selected form the Gallery*/
     private String selectedImgPath;
+    /* Photo taken by the camera*/
+    private String cameraImgPath;
 
 
     //firebase
@@ -65,6 +67,8 @@ public class SelectedImgActivity extends AppCompatActivity {
     //Storage FireBase
     FirebaseStorage storage;
     StorageReference storageRef;
+
+    Intent intent;
 
 
     @Override
@@ -86,6 +90,10 @@ public class SelectedImgActivity extends AppCompatActivity {
         //disable the keyboard when accessing the activity
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 
+        //Sets the chosen img in the imageView
+        // Receiving the selected image from  Gallery fragment and displaying it ..
+        setImg();
+
 
 //        final String caption = description.getText().toString();
 
@@ -103,23 +111,30 @@ public class SelectedImgActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Log.d(TAG, "onClick: navigating to the final share screen.");
-
-
                 String  description = descriptionEditText.getText().toString();
+                intent = getIntent();
+                if (intent.hasExtra("SelectedImg")){
+                    firebaseUtilities.uploadPhotoUsingUrlUsingUrl(getString(R.string.normal_photo), description, countPhoto, selectedImgPath);
 
-
-                firebaseUtilities.uploadPhotoUsingUrlUsingUrl(getString(R.string.normal_photo), description, countPhoto, selectedImgPath);
-
+                }else if (intent.hasExtra("photo_URL_bitmap")){
+                    firebaseUtilities.uploadPhotoUsingUrlUsingUrl(getString(R.string.normal_photo), description, countPhoto, cameraImgPath);
+                }
             }
         });
+    }
 
+    private void setImg(){
+        intent = getIntent();
+        if (intent.hasExtra("SelectedImg")){
+            selectedImgPath = intent.getStringExtra("SelectedImg");
+            selectedImg = (ImageView) findViewById(R.id.selectedImgFinal);
+            UniversalImageLoader.setImage(selectedImgPath, selectedImg, null, mAppend);
 
-
-        //Receiving the selected image from  Gallery fragment and displaying it ...
-        selectedImgPath = getIntent().getStringExtra("SelectedImg");
-        selectedImg = (ImageView) findViewById(R.id.selectedImgFinal);
-        UniversalImageLoader.setImage(selectedImgPath, selectedImg, null, mAppend);
-
+        }else if (intent.hasExtra("photo_URL_bitmap")){
+            cameraImgPath = intent.getStringExtra("photo_URL_bitmap");
+            selectedImg = (ImageView) findViewById(R.id.selectedImgFinal);
+            UniversalImageLoader.setImage(cameraImgPath, selectedImg, null, mAppend);
+        }
 
     }
 

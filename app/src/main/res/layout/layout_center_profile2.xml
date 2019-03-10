@@ -39,7 +39,7 @@
                         android:layout_marginLeft="10dp"
                         android:layout_marginTop="10dp"
                         app:civ_border_color="#FF000000"
-                        app:civ_border_width="2dp" />
+                        app:civ_border_width="0.5dp" />
                 </RelativeLayout>
 
                 <RelativeLayout
@@ -101,14 +101,17 @@
                 android:layout_below="@id/linLayout2"
                 android:layout_marginBottom="50dp">
 
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/recyclerView"
+                <GridView
+                    android:id="@+id/gridView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:horizontalSpacing="2dp"
-                    android:scrollbars="vertical">
+                    android:gravity="center"
+                    android:horizontalSpacing="1dp"
+                    android:numColumns="3"
+                    android:stretchMode="columnWidth"
+                    android:verticalSpacing="1dp">
 
-                </android.support.v7.widget.RecyclerView>
+                </GridView>
 
 
             </RelativeLayout>

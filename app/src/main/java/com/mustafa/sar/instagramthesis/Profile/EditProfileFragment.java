@@ -94,7 +94,8 @@ public class EditProfileFragment extends Fragment {
                 // Cuz we wanna know if it is a profile photo or normal photo
                 // we will use a flag to do so.
                 Intent intent = new Intent(getActivity(), ShareActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT); // this flag is a number but NOT zero
+                intent.addFlags(Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT); // this flag is a number but NOT zero you can use any flag
+                 /*it will be caught by  galleryFragment cuz it is the first one in the share activity*/
                 getActivity().startActivity(intent);
                 getActivity().finish();
 

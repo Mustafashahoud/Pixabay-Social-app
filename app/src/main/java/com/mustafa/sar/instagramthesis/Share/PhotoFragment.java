@@ -43,7 +43,6 @@ public class PhotoFragment extends Fragment {
                 if(((ShareActivity)getActivity()).getCurrentTabNumber() == REQUEST_IMAGE_CAPTURE){
                     if (((ShareActivity)getActivity()).checkPermission(Permission.CAMERA_PERMISSION)) {
                             Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-
                         if (cameraIntent.resolveActivity(getActivity().getPackageManager()) != null) {
                           //  cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(new File("MyImageCapture")));
                             startActivityForResult(cameraIntent, REQUEST_IMAGE_CAPTURE);
@@ -62,23 +61,41 @@ public class PhotoFragment extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        // Make sure the request was successful
-        // Check which request we're responding to
-        if (requestCode == REQUEST_IMAGE_CAPTURE ) {
-            Bundle extras = data.getExtras();
-            Bitmap imageBitmap = (Bitmap) extras.get("data");
-            /*TODO it is not as it executes very slowly*/
-            Uri tempUri = getImageUri(getActivity(), imageBitmap);
-            Log.d(TAG, "onActivityResult: " + tempUri);
-            String url = getRealPathFromUri(getActivity(), tempUri);
+        //that means we wanna share a photo from camera
+        if (isRootTask()){
+            if (requestCode == REQUEST_IMAGE_CAPTURE ) {
+                Bundle extras = data.getExtras();
+                Bitmap imageBitmap = (Bitmap) extras.get("data");
+                /*TODO it is not as it executes very slowly*/
+                Uri tempUri = getImageUri(getActivity(), imageBitmap);
+                Log.d(TAG, "onActivityResult: " + tempUri);
+                String url = getRealPathFromUri(getActivity(), tempUri);
 
-            Intent intent = new Intent(getActivity(), AccountSettingActivity.class);
-            intent.putExtra("photo_URL_bitmap", url);
-            intent.putExtra("return_to_fragment", getString(R.string.edit_profile_fragment));
+                Intent intent = new Intent(getActivity(), SelectedImgActivity.class);
+                intent.putExtra("photo_URL_bitmap", url);
+                startActivity(intent);
+            }
+        }
+        //that means we wanna change the profile photo from camera
+        else{
+            // Make sure the request was successful
+            // Check which request we're responding to
+            if (requestCode == REQUEST_IMAGE_CAPTURE ) {
+                Bundle extras = data.getExtras();
+                Bitmap imageBitmap = (Bitmap) extras.get("data");
+                /*TODO it is not as it executes very slowly*/
+                Uri tempUri = getImageUri(getActivity(), imageBitmap);
+                Log.d(TAG, "onActivityResult: " + tempUri);
+                String url = getRealPathFromUri(getActivity(), tempUri);
 
-            // Finish the activity that holds the fragment to get the back arrow work properly
-            startActivity(intent);
-            getActivity().finish();
+                Intent intent = new Intent(getActivity(), AccountSettingActivity.class);
+                intent.putExtra("photo_URL_bitmap", url);
+                intent.putExtra("return_to_fragment", getString(R.string.edit_profile_fragment));
+
+                // Finish the activity that holds the fragment to get the back arrow work properly
+                startActivity(intent);
+                getActivity().finish();
+            }
         }
     }
     private Uri getImageUri(Context context, Bitmap inImage) {
@@ -101,6 +118,18 @@ public class PhotoFragment extends Fragment {
                 cursor.close();
             }
         }
+    }
+
+    /**
+     * Is root task boolean.
+     *
+     * @return  true if we are coming from shareActivity willing to share a photo directly NOT by pressing changeProfilePhoto willing to change the profile photo
+     */
+    public boolean isRootTask(){
+        if (((ShareActivity)getActivity()).getIntentFlag() == 0){
+            return  true;
+        }
+        else return false;
     }
 
 }

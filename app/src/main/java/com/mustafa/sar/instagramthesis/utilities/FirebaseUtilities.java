@@ -167,7 +167,7 @@ public class FirebaseUtilities {
 
         UserProfileAccountSetting userProfileAccountSetting =
                 new UserProfileAccountSetting(description, shrinkUsername(username),
-                        0, 0, 0, profile_photo, username, website);
+                        0, 0, 0, profile_photo, username, website, userID);
 
         myRef.child(activity.getString(R.string.db_userprofileaccount))
                 .child(userID).setValue(userProfileAccountSetting);

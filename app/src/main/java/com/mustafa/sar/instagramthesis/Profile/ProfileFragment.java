@@ -14,6 +14,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -24,6 +25,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 import com.mustafa.sar.instagramthesis.Home.HomeActivity;
@@ -32,14 +34,25 @@ import com.mustafa.sar.instagramthesis.R;
 import com.mustafa.sar.instagramthesis.utilities.BottomNavigationViewHelper;
 import com.mustafa.sar.instagramthesis.utilities.FirebaseUtilities;
 import com.mustafa.sar.instagramthesis.utilities.UniversalImageLoader;
+import com.mustafa.sar.instagramthesis.utilities.gallery.GridImageAdapter;
 import com.mustafa.sar.instagramthesis.utilities.models.GeneralInfoUserModel;
+import com.mustafa.sar.instagramthesis.utilities.models.Photo;
 import com.mustafa.sar.instagramthesis.utilities.models.User;
 import com.mustafa.sar.instagramthesis.utilities.models.UserProfileAccountSetting;
+
+import java.util.ArrayList;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ProfileFragment extends Fragment {
     private static final String TAG = "ProfileFragment";
+
+    public interface OnGridImageSelectedListener{
+            void onGridImageSelected(Photo photo, int activityNumber);
+    }
+
+    OnGridImageSelectedListener onGridImageSelectedListener;
+
     private static final int ACTIVITY_NUM = 4;
 
     private TextView mPosts, mFollowers, mFollowing, mDisplayName, mUsername, mWebsite, mDescription , tvEditProfile;
@@ -90,10 +103,24 @@ public class ProfileFragment extends Fragment {
         setupFirebaseAuth();
 
         setupTvEditProfile();
-        mProgressBar.setVisibility(View.GONE);
+       mProgressBar.setVisibility(View.GONE);
+
+        populateGridView();
 
 
         return view;
+    }
+
+
+    @Override
+    public void onAttach(Context context) {
+        try {
+            //instantiating OnGridImageSelectedListener
+            onGridImageSelectedListener = (OnGridImageSelectedListener) getActivity();
+        }catch (ClassCastException e){
+            Log.e(TAG, "onAttach: ClassCastException:" + e.getMessage());
+        }
+        super.onAttach(context);
     }
 
     /**
@@ -158,6 +185,49 @@ public class ProfileFragment extends Fragment {
                 startActivity(intent);
             }
         });
+    }
+
+    private void populateGridView(){
+        /*We will need an ArrayList to save the photo inside it*/
+        final ArrayList<Photo> photos = new ArrayList<>();
+        String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        Query query = myRef.child("user_photos").child(userId);
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot photo: dataSnapshot.getChildren()) {
+                    /*We get the photos objects for all photos of a certain user */
+                    photos.add(photo.getValue(Photo.class));
+                }
+                ArrayList<String> imgUrls = new ArrayList();
+                for (int i = 0; i < photos.size(); i++) {
+                    /*We get the url of each photo objects in the database*/
+                    imgUrls.add(photos.get(i).getImage_path());
+                }
+                setColumnGridViewWidth();
+                GridImageAdapter gridImageAdapter = new GridImageAdapter(getActivity(), R.layout.layout_grid_imageview, "",imgUrls);
+                gridView.setAdapter(gridImageAdapter);
+
+                //We will add a listener to the items of GridView  and then we can use our interface to navigate to postViewFragment
+                gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        onGridImageSelectedListener.onGridImageSelected(photos.get(position), ACTIVITY_NUM);
+                    }
+                });
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    private void setColumnGridViewWidth(){
+        int widthGridView = getResources().getDisplayMetrics().widthPixels;//get the widthPixels od the GridView
+        int imgWidth = widthGridView/3;
+        gridView.setColumnWidth(imgWidth);
     }
 
     ///////////////////////////*******************Firebase********************///////////////////////
