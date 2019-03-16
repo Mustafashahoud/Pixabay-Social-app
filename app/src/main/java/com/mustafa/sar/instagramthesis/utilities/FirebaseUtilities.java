@@ -113,7 +113,7 @@ public class FirebaseUtilities {
                         } else if (!task.isSuccessful()) {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "createUserWithEmail:failure", task.getException());
-                            Toast.makeText(activity, "Authentication failed.",
+                            Toast.makeText(mContext, "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
                         }
                     }
@@ -162,7 +162,7 @@ public class FirebaseUtilities {
         User user = new User(userID, 1, email, shrinkUsername(username));
 
         // Set the Object user attributes to the Database table user_edite_profile_info
-        myRef.child(activity.getString(R.string.db_user)).child(userID)
+        myRef.child(mContext.getString(R.string.db_user)).child(userID)
                 .setValue(user);
 
         UserProfileAccountSetting userProfileAccountSetting =
