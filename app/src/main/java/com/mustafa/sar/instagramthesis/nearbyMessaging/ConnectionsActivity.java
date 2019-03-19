@@ -130,7 +130,7 @@ public abstract class ConnectionsActivity  extends AppCompatActivity {
                         return;
                     }
                     // We're connected! Can now start sending and receiving data.
-                    connectedToEndpoint(mPendingConnections.remove(endpointId));
+                    connectedToEndpoint(mPendingConnections.remove(endpointId)); // onEndpointConnected -- > setState --> onstateChanged
                 }
 
                 @Override
@@ -458,6 +458,7 @@ public abstract class ConnectionsActivity  extends AppCompatActivity {
      * @param payload The data you want to send.
      */
     protected void send(Payload payload) {
+
         send(payload, mEstablishedConnections.keySet());
     }
 

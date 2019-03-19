@@ -13,9 +13,7 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="20dp"
-        android:orientation="horizontal"
-        android:visibility="gone"
-        tools:visibility="visible">
+        android:orientation="horizontal">
 
         <EditText
             android:id="@+id/edittext_message"
@@ -32,11 +30,32 @@
 
     </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="20sp"
+        android:id="@+id/name_layout"
+        android:layout_below="@+id/layout_message">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="5sp"
+            android:text="Device Name:"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/blue"
+            android:id="@+id/name"/>
+    </LinearLayout>
+
+
     <TextView
         android:id="@+id/debug_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/layout_message"
+        android:layout_marginTop="20sp"
+        android:layout_below="@+id/name_layout"
         android:text="Debug"/>
 
     <TextView
@@ -57,29 +76,33 @@
         android:id="@+id/layout_nearby_buttons"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:orientation="horizontal"
-        android:visibility="gone"
-        tools:visibility="visible">
+        android:layout_marginBottom="30sp"
+        android:layout_below="@+id/debug_text">
 
         <Button
-            android:id="@+id/button_advertise"
-            android:layout_width="wrap_content"
+            android:layout_width="85sp"
             android:layout_height="wrap_content"
-            android:text="Advertise"/>
-
+            android:layout_centerHorizontal="true"
+            android:textSize="15sp"
+            android:text="Advertise"
+            android:layout_marginTop="40dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginLeft="20dp"
+            android:background="@drawable/white_rounded_button"
+            android:id="@+id/advertise_button"/>
         <Button
-            android:id="@+id/button_discover"
-            android:layout_width="wrap_content"
+            android:layout_width="85sp"
             android:layout_height="wrap_content"
-            android:text="Discover"/>
-
-        <Button
-            android:onClick="openNearbyMessages"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="NearbyMessagesAPI"/>
+            android:layout_centerHorizontal="true"
+            android:textSize="15sp"
+            android:text="Discover"
+            android:layout_marginTop="40dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginLeft="20dp"
+            android:background="@drawable/white_rounded_button"
+            android:id="@+id/discover_button"/>
     </LinearLayout>
 
 </RelativeLayout>

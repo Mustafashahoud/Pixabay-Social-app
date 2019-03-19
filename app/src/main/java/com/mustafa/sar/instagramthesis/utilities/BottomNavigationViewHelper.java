@@ -8,12 +8,13 @@ import android.support.design.widget.BottomNavigationView;
 import android.view.MenuItem;
 
 import com.mustafa.sar.instagramthesis.Home.HomeActivity;
-import com.mustafa.sar.instagramthesis.Likes.LikeActivity;
 import com.mustafa.sar.instagramthesis.Profile.ProfileActivity;
 import com.mustafa.sar.instagramthesis.R;
 import com.mustafa.sar.instagramthesis.Search.SearchActivity;
 import com.mustafa.sar.instagramthesis.Share.ShareActivity;
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
+import com.mustafa.sar.instagramthesis.nearbyMessaging.MainActivity;
+import com.mustafa.sar.instagramthesis.nearbyMessaging.VoiceActivity;
 
 public class BottomNavigationViewHelper {
 
@@ -49,8 +50,8 @@ public class BottomNavigationViewHelper {
                         break;
 
 
-                    case R.id.ic_alert:
-                        Intent intent4 = new Intent(context, LikeActivity.class); //  ACTIVITY_NUM 3
+                    case R.id.ic_nearby:
+                        Intent intent4 = new Intent(context, MainActivity.class); //  ACTIVITY_NUM 3
                         context.startActivity(intent4);
                         break;
 

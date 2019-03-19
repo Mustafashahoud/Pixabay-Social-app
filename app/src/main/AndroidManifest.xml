@@ -42,7 +42,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Likes.LikeActivity"></activity>
+
         <activity android:name=".Profile.ProfileActivity"></activity>
         <activity android:name=".Search.SearchActivity"></activity>
         <activity android:name=".Share.ShareActivity"></activity>
@@ -50,11 +50,16 @@
         <activity android:name=".Login.LoginActivity"></activity>
         <activity android:name=".Login.RegisterActivity"></activity>
         <activity android:name=".Share.SelectedImgActivity"></activity>
-
         <activity android:name=".nearbyMessaging.MainActivity"></activity>
+        <activity android:name=".nearbyMessaging.VoiceActivity"></activity>
+        <activity android:name=".nearbyMessaging.TextActivity"
+            android:windowSoftInputMode="adjustPan">
+        </activity>
+
+
 
         <!--  <activity android:name=".nearbyMessaging.NearbyMessagesActivity"></activity> -->
-        <!-- <activity android:name=".nearbyMessaging.MainActivity"></activity> -->
+        <!-- <activity android:name=".nearbyMessaging.VoiceActivity"></activity> -->
     </application>
 
 </manifest>

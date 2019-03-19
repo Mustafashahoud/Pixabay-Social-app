@@ -1,9 +1,6 @@
 package com.mustafa.sar.instagramthesis.Search;
 
 import android.content.Context;
-import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -12,7 +9,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.mustafa.sar.instagramthesis.R;
-import com.mustafa.sar.instagramthesis.nearbyMessaging.MainActivity;
 //import com.mustafa.sar.instagramthesis.nearbyMessaging.NearbyMessagesActivity;
 import com.mustafa.sar.instagramthesis.utilities.BottomNavigationViewHelper;
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
@@ -28,9 +24,6 @@ public class SearchActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         Log.d(TAG, "onCreate: SearchActivity");
         setContentView(R.layout.activity_home);
-
-        Intent intent = new Intent(SearchActivity.this, MainActivity.class);
-        startActivity(intent);
 
         setupBottomNavigationView();
 
