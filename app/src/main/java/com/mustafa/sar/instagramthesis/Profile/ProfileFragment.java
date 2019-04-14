@@ -29,18 +29,22 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 import com.mustafa.sar.instagramthesis.Home.HomeActivity;
-import com.mustafa.sar.instagramthesis.Login.LoginActivity;
 import com.mustafa.sar.instagramthesis.R;
+import com.mustafa.sar.instagramthesis.models.Comment;
+import com.mustafa.sar.instagramthesis.models.Like;
 import com.mustafa.sar.instagramthesis.utilities.BottomNavigationViewHelper;
 import com.mustafa.sar.instagramthesis.utilities.FirebaseUtilities;
 import com.mustafa.sar.instagramthesis.utilities.UniversalImageLoader;
 import com.mustafa.sar.instagramthesis.utilities.gallery.GridImageAdapter;
-import com.mustafa.sar.instagramthesis.utilities.models.GeneralInfoUserModel;
-import com.mustafa.sar.instagramthesis.utilities.models.Photo;
-import com.mustafa.sar.instagramthesis.utilities.models.User;
-import com.mustafa.sar.instagramthesis.utilities.models.UserProfileAccountSetting;
+import com.mustafa.sar.instagramthesis.models.GeneralInfoUserModel;
+import com.mustafa.sar.instagramthesis.models.Photo;
+import com.mustafa.sar.instagramthesis.models.User;
+import com.mustafa.sar.instagramthesis.models.UserProfileAccountSetting;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -188,16 +192,48 @@ public class ProfileFragment extends Fragment {
     }
 
     private void populateGridView(){
-        /*We will need an ArrayList to save the photo inside it*/
+        /*We will need an ArrayList to save the photos inside it*/
         final ArrayList<Photo> photos = new ArrayList<>();
         String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        Query query = myRef.child("user_photos").child(userId);
+        Query query = myRef.child(getString(R.string.db_user_photos)).child(userId);
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for (DataSnapshot photo: dataSnapshot.getChildren()) {
+                for (DataSnapshot singleSnapshot : dataSnapshot.getChildren()) {
                     /*We get the photos objects for all photos of a certain user */
-                    photos.add(photo.getValue(Photo.class));
+                    //photos.add(photo.getValue(Photo.class));
+                    Photo photo = new Photo();
+                    Map<String, Object> objectMap = (HashMap<String, Object>) singleSnapshot.getValue();
+
+                    photo.setCaption(objectMap.get(getString(R.string.field_caption)).toString());
+                    photo.setTags(objectMap.get(getString(R.string.field_tags)).toString());
+                    photo.setPhoto_id(objectMap.get(getString(R.string.field_photo_id)).toString());
+                    photo.setUser_id(objectMap.get(getString(R.string.field_user_id)).toString());
+                    photo.setDate_created(objectMap.get(getString(R.string.field_date_created)).toString());
+                    photo.setImage_path(objectMap.get(getString(R.string.field_image_path)).toString());
+
+                    ArrayList<Comment> comments = new ArrayList<>();
+                    for (DataSnapshot dSnapshot : singleSnapshot
+                            .child(getString(R.string.field_comments)).getChildren()){
+                        Comment comment = new Comment();
+                        comment.setUser_id(dSnapshot.getValue(Comment.class).getUser_id());
+                        comment.setComment(dSnapshot.getValue(Comment.class).getComment());
+                        comment.setDate_created(dSnapshot.getValue(Comment.class).getDate_created());
+                        comments.add(comment);
+                    }
+
+                    photo.setComments(comments);
+
+                    List<Like> likesList = new ArrayList<Like>();
+                    for (DataSnapshot dSnapshot : singleSnapshot
+                            .child(getString(R.string.field_likes)).getChildren()){
+                        Like like = new Like();
+                        like.setUser_id(dSnapshot.getValue(Like.class).getUser_id());
+                        likesList.add(like);
+                    }
+                    photo.setLikes(likesList);
+
+                    photos.add(photo);
                 }
                 ArrayList<String> imgUrls = new ArrayList();
                 for (int i = 0; i < photos.size(); i++) {

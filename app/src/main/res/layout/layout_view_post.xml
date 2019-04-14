@@ -45,7 +45,7 @@
                 <ImageView
                     android:layout_width="30dp"
                     android:layout_height="30dp"
-                    android:src="@drawable/ic_menu"
+                    app:srcCompat= "@drawable/ic_menu"
                     android:layout_centerVertical="true"
                     android:layout_alignParentRight="true"
                     android:layout_marginRight="20dp"
@@ -88,7 +88,7 @@
                         android:id="@+id/image_heart"
                         android:layout_centerInParent="true"
                         android:layout_marginLeft="20dp"
-                        android:src="@drawable/ic_heart"
+                        android:src="@drawable/ic_white_heart"
                         android:visibility="visible"/>
 
                 </RelativeLayout>
@@ -96,7 +96,7 @@
                 <ImageView
                     android:layout_width="35dp"
                     android:layout_height="35dp"
-                    android:id="@+id/speech_bubble"
+                    android:id="@+id/comment_image"
                     android:layout_toRightOf="@+id/heartLayout"
                     android:layout_marginLeft="10dp"
                     android:src="@drawable/ic_comment"

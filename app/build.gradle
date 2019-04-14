@@ -9,6 +9,7 @@ android {
     defaultConfig {
         resConfigs("en", "xxhdpi")
         applicationId "com.mustafa.sar.instagramthesis"
+        vectorDrawables.useSupportLibrary = true
         minSdkVersion 16
         targetSdkVersion 27
         versionCode 1

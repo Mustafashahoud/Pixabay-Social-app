@@ -22,14 +22,13 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.internal.InternalTokenResult;
 import com.mustafa.sar.instagramthesis.R;
 import com.mustafa.sar.instagramthesis.Share.ShareActivity;
 import com.mustafa.sar.instagramthesis.utilities.FirebaseUtilities;
 import com.mustafa.sar.instagramthesis.utilities.UniversalImageLoader;
-import com.mustafa.sar.instagramthesis.utilities.models.GeneralInfoUserModel;
-import com.mustafa.sar.instagramthesis.utilities.models.User;
-import com.mustafa.sar.instagramthesis.utilities.models.UserProfileAccountSetting;
+import com.mustafa.sar.instagramthesis.models.GeneralInfoUserModel;
+import com.mustafa.sar.instagramthesis.models.User;
+import com.mustafa.sar.instagramthesis.models.UserProfileAccountSetting;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 

@@ -1,4 +1,4 @@
-package com.mustafa.sar.instagramthesis.utilities.models;
+package com.mustafa.sar.instagramthesis.models;
 
 /**
  * this calss to fill out and interact with database firebase it represents a table or a node

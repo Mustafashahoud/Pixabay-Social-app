@@ -33,10 +33,10 @@ import com.google.firebase.storage.UploadTask;
 import com.mustafa.sar.instagramthesis.Home.HomeActivity;
 import com.mustafa.sar.instagramthesis.Profile.AccountSettingActivity;
 import com.mustafa.sar.instagramthesis.R;
-import com.mustafa.sar.instagramthesis.utilities.models.GeneralInfoUserModel;
-import com.mustafa.sar.instagramthesis.utilities.models.Photo;
-import com.mustafa.sar.instagramthesis.utilities.models.User;
-import com.mustafa.sar.instagramthesis.utilities.models.UserProfileAccountSetting;
+import com.mustafa.sar.instagramthesis.models.GeneralInfoUserModel;
+import com.mustafa.sar.instagramthesis.models.Photo;
+import com.mustafa.sar.instagramthesis.models.User;
+import com.mustafa.sar.instagramthesis.models.UserProfileAccountSetting;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -392,33 +392,31 @@ public class FirebaseUtilities {
     }
 
     private String getTimeStamp() {
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-mm-dd'T'hh:mm:ss'Z'", Locale.US);
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.UK);
         simpleDateFormat.setTimeZone(TimeZone.getTimeZone("Europe/Budapest"));
         return simpleDateFormat.format(new Date());
     }
 
     public static String getTags(String string) {
+
+        int counter =-1;
+        StringBuilder sb = new StringBuilder();
         if (string.indexOf("#") > 0) {
-            StringBuilder sb = new StringBuilder();
+
             char[] charArray = string.toCharArray();
             boolean foundWord = false;
-            for (char c : charArray) {
-                if (c == '#') {
-                    foundWord = true;
-                    sb.append(c);
-                } else {
-                    if (foundWord) {
-                        sb.append(c);
-                    }
-                }
-                if (c == ' ') {
-                    foundWord = false;
+
+            for (int i =0 ; i < charArray.length ; i++){
+
+                if (charArray[i] != '%' && charArray[i] != '$'){
+                    sb.append(charArray[i]);
+                }else if (charArray[i] == '%'){
+                    counter = Integer.valueOf(charArray[i]) +1;
+                    sb.append("{"+counter+"}");
                 }
             }
-            String s = sb.toString().replace(" ", "").replace("#", ",#");
-            return s.substring(1, s.length());
         }
-        return string;
+        return sb.toString();
     }
     /* TODO Clean this method and change the circlePrgressBar it is shitty */
 

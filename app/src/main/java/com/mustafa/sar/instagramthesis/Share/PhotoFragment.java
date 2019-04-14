@@ -66,7 +66,7 @@ public class PhotoFragment extends Fragment {
             if (requestCode == REQUEST_IMAGE_CAPTURE ) {
                 Bundle extras = data.getExtras();
                 Bitmap imageBitmap = (Bitmap) extras.get("data");
-                /*TODO it is not as it executes very slowly*/
+                /*TODO it is bad as it executes very slowly*/
                 Uri tempUri = getImageUri(getActivity(), imageBitmap);
                 Log.d(TAG, "onActivityResult: " + tempUri);
                 String url = getRealPathFromUri(getActivity(), tempUri);

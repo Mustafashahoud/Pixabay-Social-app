@@ -1,4 +1,4 @@
-package com.mustafa.sar.instagramthesis.utilities.models;
+package com.mustafa.sar.instagramthesis.models;
 
 public class GeneralInfoUserModel {
     private User user ;
