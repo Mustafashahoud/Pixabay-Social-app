@@ -60,6 +60,7 @@ public class FirebaseUtilities {
     private StorageReference storageRef;
 
     CircleProgressBar circleProgressBar;
+    String currentUserID= "";
 
     public FirebaseUtilities(Context context) {
         mContext = context;
@@ -382,8 +383,13 @@ public class FirebaseUtilities {
      */
     public int getCountPhotos(DataSnapshot dataSnapshot) {
         int count = 0;
+        try{
+            currentUserID = mAuth.getCurrentUser().getUid();
+        }catch (NullPointerException e){
+            Log.d(TAG, "getCountPhotos: NullPointerException " + e.getMessage());
+        }
         for (DataSnapshot ds : dataSnapshot.child("user_photos")
-                .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                .child(currentUserID)
                 .getChildren()) {
             count++;
 

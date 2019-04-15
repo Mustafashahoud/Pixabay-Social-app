@@ -50,7 +50,7 @@ public class RegisterActivity extends AppCompatActivity {
     public String userID;
 
     //append to username in case there is a match
-    String append;
+    String append= "";
 
 
     @Override
