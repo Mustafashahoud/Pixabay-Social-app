@@ -1,6 +1,7 @@
 package com.mustafa.sar.instagramthesis.Profile;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentTransaction;
@@ -51,11 +52,29 @@ public class ProfileActivity extends AppCompatActivity  implements
 
     private void profileContainerMethod(){
 
-        ProfileFragment profileFragment = new ProfileFragment();
-        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.fragmentContainer , profileFragment);
-        fragmentTransaction.addToBackStack("Profile");
-        fragmentTransaction.commit();
+        Intent intent = getIntent();
+        
+        if (intent.hasExtra("calling activity")){
+
+            Log.d(TAG, "profileContainerMethod: We are coming from Search Activity");
+            ViewProfileFragment fragment = new ViewProfileFragment();
+            Bundle bundle = new Bundle();
+            bundle.putParcelable("user", intent.getParcelableExtra("user"));
+            fragment.setArguments(bundle);
+
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            transaction.replace(R.id.fragmentContainer, fragment);
+            transaction.addToBackStack("View Profile Fragment");
+            transaction.commit();
+
+        }else {
+            ProfileFragment profileFragment = new ProfileFragment();
+            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.replace(R.id.fragmentContainer , profileFragment);
+            fragmentTransaction.addToBackStack("Profile");
+            fragmentTransaction.commit();
+
+        }
 
     }
     // Imp of onGridImageSelected to navigate to ViewPostFragment
