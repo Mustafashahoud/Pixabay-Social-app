@@ -5,33 +5,27 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
-import android.support.design.widget.TextInputLayout;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.AppCompatButton;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.EditText;
-import android.widget.Toast;
+import android.widget.FrameLayout;
+import android.widget.RelativeLayout;
 
-
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 import com.mustafa.sar.instagramthesis.Login.LoginActivity;
 import com.mustafa.sar.instagramthesis.R;
+import com.mustafa.sar.instagramthesis.models.Photo;
+import com.mustafa.sar.instagramthesis.post.ViewCommentFragment;
 import com.mustafa.sar.instagramthesis.utilities.BottomNavigationViewHelper;
 import com.mustafa.sar.instagramthesis.utilities.SectionsPagerAdapter;
 import com.mustafa.sar.instagramthesis.utilities.UniversalImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoader;
-
-import java.util.zip.Inflater;
 
 
 public class HomeActivity extends AppCompatActivity {
@@ -45,10 +39,19 @@ public class HomeActivity extends AppCompatActivity {
     private FirebaseUser currentUser;
     private FirebaseAuth.AuthStateListener myAuthenListener;
 
+    //widgets
+    private ViewPager mViewPager;
+    private FrameLayout mFrameLayout;
+    private RelativeLayout mRelativeLayout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
+        mViewPager = (ViewPager) findViewById(R.id.containerViewPager);
+        mFrameLayout = (FrameLayout) findViewById(R.id.container);
+        mRelativeLayout = (RelativeLayout) findViewById(R.id.relativeLayoutParent);
 
         //Disabling shifting mood for the BottomNavigationView
         setupBottomNavigationView();
@@ -57,8 +60,6 @@ public class HomeActivity extends AppCompatActivity {
         initImageLoader();
         //This is for Firebase Authentication
         setupFirebaseAuth();
-
-        
 
     }
 
@@ -89,6 +90,30 @@ public class HomeActivity extends AppCompatActivity {
     }
 
 
+    public void hideLayout(){
+        Log.d(TAG, "hideLayout: hiding layout");
+        mRelativeLayout.setVisibility(View.GONE);
+        mFrameLayout.setVisibility(View.VISIBLE);
+    }
+
+
+    public void showLayout(){
+        Log.d(TAG, "hideLayout: showing layout");
+        mRelativeLayout.setVisibility(View.VISIBLE);
+        mFrameLayout.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void onBackPressed() {
+        int count = getSupportFragmentManager().getBackStackEntryCount();
+        if (count == 0) {
+            finishAffinity();
+        } else {
+            Intent intent = new Intent(this, HomeActivity.class);
+            startActivity(intent);
+        }
+    }
+
     /**
      * Responsible for adding the 3 tabs fragments : Camera , Home , Messages
      */
@@ -100,14 +125,13 @@ public class HomeActivity extends AppCompatActivity {
         mAdapter.addFragment(new HomeFragment()); // index 2
         mAdapter.addFragment(new MessagesFragment()); // index 3
 
-        ViewPager mPager = (ViewPager) findViewById(R.id.containerViewPager);
-        mPager.setAdapter(mAdapter);
+        mViewPager.setAdapter(mAdapter);
         TabLayout tabLayout = findViewById(R.id.tabs);
 
         //link The ViewPager to the TabLayout
       /*  When adding the TabLayout to the viewPager
         Dynamically the tabLayout will take the ViewPager fragments so we must not Do tabLayout.addTab*/
-        tabLayout.setupWithViewPager(mPager);
+        tabLayout.setupWithViewPager(mViewPager);
 
         //add the first tab.
         //tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.ic_camera));
@@ -127,7 +151,32 @@ public class HomeActivity extends AppCompatActivity {
 
 
     }
-    
+
+    public void onCommentSelected(Photo photo, String calling){
+        Log.d(TAG, "onCommentSelected: selected a comment");
+
+        ViewCommentFragment fragment  = new ViewCommentFragment();
+        Bundle args = new Bundle();
+        args.putParcelable("getPhoto", photo);
+        args.putString("Home Activity", calling);
+        fragment.setArguments(args);
+
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.container, fragment);
+        transaction.addToBackStack(getString(R.string.view_comments_fragment));
+        transaction.commit();
+
+    }
+
+//    @Override`
+//    public void onBackPressed() {
+//        finish();
+//        finishAffinity();
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+//            finishAndRemoveTask();
+//        }
+//    }
+
     // -------------------------------Firebase Stuff -----------------------
 
     /**
@@ -157,20 +206,24 @@ public class HomeActivity extends AppCompatActivity {
                 }
             }
         };
-
     }
 
     @Override
     public void onStart() {
         super.onStart();
 
+         // set the Home Fragment first
+
         Log.d(TAG, "onStart: checking if the user is logged in or out");
         mAuth.addAuthStateListener(myAuthenListener);
+
         // Check if user is signed in (non-null) and update UI accordingly.
         currentUser = mAuth.getCurrentUser();
         if (currentUser == null){
             Intent intent = new Intent(mContext , LoginActivity.class);
             startActivity(intent);
+        }else {
+            mViewPager.setCurrentItem(1);
         }
 
     }

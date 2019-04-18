@@ -8,6 +8,9 @@
 
     <string name="field_comments">comments</string>
 
+    <string name="db_following">following</string>
+    <string name="db_followers">followers</string>
+
     <!-- firebase database -->
     <string name="db_user">user_edite_profile_info</string>
     <string name="db_userprofileaccount">user_profile_account</string>
@@ -18,18 +21,14 @@
     <string name="field_user_id">user_id</string>
     <string name="field_username">username</string>
 
+    <string name="bundle_photo">bundle_photo</string>
+    <string name="bundle_user_account_settings">bundle_user_account_settings</string>
+
     <string name="field_caption">caption</string>
     <string name="field_date_created">date_created</string>
     <string name="field_photo_id">photo_id</string>
     <string name="field_tags">tags</string>
     <string name="field_image_path">image_path</string>
-
-
-
-
-
-
-
 
     <!-- Pic type-->
     <string name="normal_photo">normal_photo</string>

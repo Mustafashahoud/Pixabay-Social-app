@@ -34,6 +34,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import static android.content.Intent.FLAG_ACTIVITY_CLEAR_TOP;
+
 public class SearchActivity extends AppCompatActivity {
 
     private static final String TAG = "SearchActivity";
@@ -135,6 +137,7 @@ public class SearchActivity extends AppCompatActivity {
                 //navigate to profile activity
 
                 Intent intent  = new Intent(SearchActivity.this, ProfileActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 intent.putExtra("calling activity", "Search Activity");
                 intent.putExtra("user", mUserList.get(position));
                 startActivity(intent);

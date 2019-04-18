@@ -1,11 +1,14 @@
 package com.mustafa.sar.instagramthesis.models;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * this calss to fill out and interact with database firebase it represents a table or a node
  * and for this example it refers to user_profile_account
  */
 
-public class UserProfileAccountSetting {
+public class UserProfileAccountSetting implements Parcelable {
     private String description;
     private String display_name;
     private long followers;
@@ -29,6 +32,30 @@ public class UserProfileAccountSetting {
         this.website = website;
         this.user_id = user_id;
     }
+
+    protected UserProfileAccountSetting(Parcel in) {
+        description = in.readString();
+        display_name = in.readString();
+        followers = in.readLong();
+        followings = in.readLong();
+        posts = in.readLong();
+        profile_photo = in.readString();
+        username = in.readString();
+        website = in.readString();
+        user_id = in.readString();
+    }
+
+    public static final Creator<UserProfileAccountSetting> CREATOR = new Creator<UserProfileAccountSetting>() {
+        @Override
+        public UserProfileAccountSetting createFromParcel(Parcel in) {
+            return new UserProfileAccountSetting(in);
+        }
+
+        @Override
+        public UserProfileAccountSetting[] newArray(int size) {
+            return new UserProfileAccountSetting[size];
+        }
+    };
 
     public String getUser_id() {
         return user_id;
@@ -117,5 +144,23 @@ public class UserProfileAccountSetting {
                 ", username='" + username + '\'' +
                 ", website='" + website + '\'' +
                 '}';
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(description);
+        dest.writeString(display_name);
+        dest.writeLong(followers);
+        dest.writeLong(followings);
+        dest.writeLong(posts);
+        dest.writeString(profile_photo);
+        dest.writeString(username);
+        dest.writeString(website);
+        dest.writeString(user_id);
     }
 }

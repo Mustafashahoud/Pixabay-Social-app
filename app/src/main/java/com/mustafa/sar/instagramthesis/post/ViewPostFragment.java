@@ -1,6 +1,7 @@
 package com.mustafa.sar.instagramthesis.post;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -62,6 +63,8 @@ public class ViewPostFragment extends Fragment implements View.OnTouchListener {
     private StringBuilder mUsers;
     private String mLikesString;
 
+    private User mCurrentUser;
+
     //firebase
     private FirebaseAuth mAuth;
     private FirebaseUser currentUser;
@@ -110,6 +113,17 @@ public class ViewPostFragment extends Fragment implements View.OnTouchListener {
 
         mGestureDetector = new GestureDetector(getActivity(), new GestureDetectorListener() );
 
+        setupFirebaseAuth();
+        setupBottomNavigationView();
+
+        return  view;
+    }
+
+    public void setOnCommentSelectedListener(OnCommentSelectedListener mOnCommentSelectedListener ){
+        this.mOnCommentSelectedListener = mOnCommentSelectedListener;
+    }
+
+    private void init(){
         try{
             //mPhoto = getPhotoFromBundle();
             UniversalImageLoader.setImage(getPhotoFormBundle().getImage_path(), mPostImage, null, "");
@@ -146,10 +160,8 @@ public class ViewPostFragment extends Fragment implements View.OnTouchListener {
                         newPhoto.setComments(commentsList);
 
                         photo = newPhoto;
-
+                        getCurrentUser();
                         getPhotoDetails();
-                        getLikesString();
-
                     }
 
                 }
@@ -163,16 +175,15 @@ public class ViewPostFragment extends Fragment implements View.OnTouchListener {
         }catch (NullPointerException e){
             Log.e(TAG, "onCreateView: NullPointerException: " + e.getMessage() );
         }
-
-        setupFirebaseAuth();
-        setupBottomNavigationView();
-
-
-        return  view;
     }
 
-    public void setOnCommentSelectedListener(OnCommentSelectedListener mOnCommentSelectedListener ){
-        this.mOnCommentSelectedListener = mOnCommentSelectedListener;
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (isAdded()){
+            init();
+        }
+
     }
 
     private void getLikesString(){
@@ -207,7 +218,7 @@ public class ViewPostFragment extends Fragment implements View.OnTouchListener {
 
                             String[] splitUsers = mUsers.toString().split(",");
 
-                            if(mUsers.toString().contains(userProfileAccountSetting.getUsername() + ",")){
+                            if(mUsers.toString().contains(mCurrentUser.getUsername() + ",")){
                                 mLikedByCurrentUser = true;
                             }else{
                                 mLikedByCurrentUser = false;
@@ -262,6 +273,28 @@ public class ViewPostFragment extends Fragment implements View.OnTouchListener {
             }
         });
     }
+    private void getCurrentUser(){
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
+        Query query = reference
+                .child(getString(R.string.db_user))
+                .orderByChild(getString(R.string.field_user_id))
+                .equalTo(FirebaseAuth.getInstance().getCurrentUser().getUid());
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for ( DataSnapshot singleSnapshot :  dataSnapshot.getChildren()){
+                    mCurrentUser = singleSnapshot.getValue(User.class);
+                }
+                getLikesString();
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.d(TAG, "onCancelled: query cancelled.");
+            }
+        });
+    }
+
     private void getPhotoDetails(){
         Log.d(TAG, "getPhotoDetails: retrieving photo details.");
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
@@ -367,7 +400,7 @@ public class ViewPostFragment extends Fragment implements View.OnTouchListener {
                 .setValue(like);
 
         myRef.child(getString(R.string.db_user_photos))
-                .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                .child(photo.getUser_id())
                 .child(photo.getPhoto_id())
                 .child(getString(R.string.field_likes))
                 .child(newLikeID)
@@ -389,6 +422,7 @@ public class ViewPostFragment extends Fragment implements View.OnTouchListener {
         mUsername.setText(userProfileAccountSetting.getUsername());
         mLikes.setText(mLikesString);
         mCaption.setText(photo.getCaption());
+        mCaption.setTextColor(Color.BLUE);
 
 
         try {
@@ -459,6 +493,8 @@ public class ViewPostFragment extends Fragment implements View.OnTouchListener {
             });
         }
     }
+
+
     /**
      * @return a string representing the number of days ago the post was posted
      */

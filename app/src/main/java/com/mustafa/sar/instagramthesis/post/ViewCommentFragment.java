@@ -26,6 +26,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.mustafa.sar.instagramthesis.Home.HomeActivity;
 import com.mustafa.sar.instagramthesis.R;
 import com.mustafa.sar.instagramthesis.models.Comment;
 import com.mustafa.sar.instagramthesis.models.Photo;
@@ -135,7 +136,14 @@ public class ViewCommentFragment extends Fragment{
             @Override
             public void onClick(View v) {
                 Log.d(TAG, "onClick: navigating back");
-                getActivity().getSupportFragmentManager().popBackStack();
+
+                if (getCallingActivityFromBundle().equals("Home Activity")){
+                    getActivity().getSupportFragmentManager().popBackStack();
+                    ((HomeActivity) getActivity()).showLayout();
+                }else {
+                    getActivity().getSupportFragmentManager().popBackStack();
+                }
+
             }
         });
     }
@@ -169,7 +177,7 @@ public class ViewCommentFragment extends Fragment{
 
         //insert into user_photos node
         myRef.child(getString(R.string.db_user_photos))
-                .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                .child(mPhoto.getUser_id())
                 .child(mPhoto.getPhoto_id())
                 .child(getString(R.string.field_comments))
                 .child(commentID)
@@ -190,6 +198,17 @@ public class ViewCommentFragment extends Fragment{
         Bundle bundle = this.getArguments();
         if(bundle != null) {
             return bundle.getParcelable("getPhoto");
+        }else{
+            return null;
+        }
+    }
+
+    private String getCallingActivityFromBundle(){
+        Log.d(TAG, "getPhotoFromBundle: arguments: " + getArguments());
+
+        Bundle bundle = this.getArguments();
+        if(bundle != null) {
+            return bundle.getString("Home Activity");
         }else{
             return null;
         }

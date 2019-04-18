@@ -58,12 +58,12 @@ dependencies {
     //Firebase
     implementation 'com.google.firebase:firebase-core:16.0.7'
     //Firebase Authentication
-    implementation 'com.google.firebase:firebase-auth:16.1.0'
+    implementation 'com.google.firebase:firebase-auth:16.2.1'
     implementation 'com.google.android.gms:play-services-auth:16.0.1'
     //Realtime database
-    implementation 'com.google.firebase:firebase-database:16.0.4'
+    implementation 'com.google.firebase:firebase-database:16.1.0'
     //Firebase Storage
-    implementation 'com.google.firebase:firebase-storage:16.0.5'
+    implementation 'com.google.firebase:firebase-storage:16.1.0'
 
     //Nearby Messaging Api
     implementation 'com.google.android.gms:play-services-nearby:16.0.0'

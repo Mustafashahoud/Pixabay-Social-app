@@ -2,6 +2,7 @@ package com.mustafa.sar.instagramthesis.Profile;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentTransaction;
@@ -9,13 +10,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.ImageView;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.mustafa.sar.instagramthesis.R;
+import com.mustafa.sar.instagramthesis.models.User;
 import com.mustafa.sar.instagramthesis.post.ViewCommentFragment;
 import com.mustafa.sar.instagramthesis.post.ViewPostFragment;
 import com.mustafa.sar.instagramthesis.models.Photo;
 
 public class ProfileActivity extends AppCompatActivity  implements
-        ProfileFragment.OnGridImageSelectedListener, OnCommentSelectedListener {
+        OnGridImageSelectedListener, OnCommentSelectedListener {
 
     private static final String TAG = "ProfileActivity";
     private static final int ACTIVITY_NUM = 4;
@@ -54,21 +57,36 @@ public class ProfileActivity extends AppCompatActivity  implements
 
         Intent intent = getIntent();
         
-        if (intent.hasExtra("calling activity")){
+        if (intent.hasExtra("calling activity")) {
+            User user = intent.getParcelableExtra("user");
+            String userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
+            if (!user.getUser_id().equals(userID)){
+                Log.d(TAG, "profileContainerMethod: We are coming from Search Activity");
+                ViewProfileFragment viewProfileFragment = new ViewProfileFragment();
+                viewProfileFragment.setOnGridImageSelectedListener(this);
+                Bundle bundle = new Bundle();
+                bundle.putParcelable("user", intent.getParcelableExtra("user"));
+                viewProfileFragment.setArguments(bundle);
 
-            Log.d(TAG, "profileContainerMethod: We are coming from Search Activity");
-            ViewProfileFragment fragment = new ViewProfileFragment();
-            Bundle bundle = new Bundle();
-            bundle.putParcelable("user", intent.getParcelableExtra("user"));
-            fragment.setArguments(bundle);
+                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.fragmentContainer, viewProfileFragment);
+                transaction.addToBackStack("View Profile Fragment");
+                transaction.commit();
 
-            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-            transaction.replace(R.id.fragmentContainer, fragment);
-            transaction.addToBackStack("View Profile Fragment");
-            transaction.commit();
+            }else {
+                ProfileFragment profileFragment = new ProfileFragment();
+                //set the OnGridImageSelectedListener that is used for passing the photo and the number
+                profileFragment.setOnGridImageSelectedListener(this);
+                FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                fragmentTransaction.replace(R.id.fragmentContainer , profileFragment);
+                fragmentTransaction.addToBackStack("Profile");
+                fragmentTransaction.commit();
 
+            }
         }else {
             ProfileFragment profileFragment = new ProfileFragment();
+            //set the OnGridImageSelectedListener that is used for passing the photo and the number
+            profileFragment.setOnGridImageSelectedListener(this);
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
             fragmentTransaction.replace(R.id.fragmentContainer , profileFragment);
             fragmentTransaction.addToBackStack("Profile");
@@ -77,6 +95,13 @@ public class ProfileActivity extends AppCompatActivity  implements
         }
 
     }
+
+    @Override
+    public void onBackPressed() {
+        //Fixed Bugs white screen appears whe navigating back to sreach activity
+        finish();
+    }
+
     // Imp of onGridImageSelected to navigate to ViewPostFragment
     @Override
     public void onGridImageSelected(Photo photo, int activityNumber) {

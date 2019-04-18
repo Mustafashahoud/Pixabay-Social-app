@@ -105,15 +105,20 @@ public class GalleryFragment extends Fragment {
 
         FileDirectory fileDirectory = new FileDirectory();
         //To add all the folders "Directories" inside the /storage/emulated/0/pictures
-        if (HelperForGettingContentOfDirectories.getDirectoryPaths(fileDirectory.PICTURES) != null) {
+        if (HelperForGettingContentOfDirectories.getDirectoryPaths(fileDirectory.PICTURES) != null
+        && HelperForGettingContentOfDirectories.getDirectoryPaths(fileDirectory.WHATS_APP) != null ) {
             //Just for showing in the spinner
             directoryNames.addAll(HelperForGettingContentOfDirectories.getDirectoryNames(fileDirectory.PICTURES));
+            directoryNames.addAll(HelperForGettingContentOfDirectories.getDirectoryNames(fileDirectory.WHATS_APP));
             //the actual paths
             directories = HelperForGettingContentOfDirectories.getDirectoryPaths(fileDirectory.PICTURES);
+            directories.addAll(HelperForGettingContentOfDirectories.getDirectoryPaths(fileDirectory.WHATS_APP));
         }
         //To add all the photos
         directoryNames.add(obtainingLastWordInDir(fileDirectory.CAMERA));
+        directoryNames.add(obtainingLastWordInDir(fileDirectory.WHATS_APP));
         directories.add(fileDirectory.CAMERA);
+        directories.add(fileDirectory.WHATS_APP);
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(),
                 android.R.layout.simple_spinner_item, directoryNames);
@@ -186,8 +191,10 @@ public class GalleryFragment extends Fragment {
         //gridView.setAdapter(adapter);
         try {
             //Populate the first big image view in the fragment_gallery layout when the gallery fragment is inflated
-            UniversalImageLoader.setImage(imgPaths.get(0), galleryImage, mProgressBar, mAppend);
-            selectedImg = imgPaths.get(0);
+            if (imgPaths.size() > 0) {
+                UniversalImageLoader.setImage(imgPaths.get(0), galleryImage, mProgressBar, mAppend);
+                selectedImg = imgPaths.get(0);
+            }
         }catch (ArrayIndexOutOfBoundsException e){
             Log.d(TAG, "setupRecycleView:  ArrayIndexOutOfBoundsException" +e.getMessage());
         }

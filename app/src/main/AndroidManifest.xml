@@ -35,7 +35,8 @@
         <meta-data
             android:name="com.google.android.nearby.messages.API_KEY"
             android:value="AIzaSyAnnCbHy8D4bs4KRcyAmUpw7GMexre5cdQ" />
-        <activity android:name=".Home.HomeActivity">
+        <activity android:name=".Home.HomeActivity"
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
