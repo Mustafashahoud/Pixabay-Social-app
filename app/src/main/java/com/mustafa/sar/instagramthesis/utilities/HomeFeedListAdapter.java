@@ -150,8 +150,17 @@ public class HomeFeedListAdapter extends ArrayAdapter<Photo> {
 
 
         //set the caption
-        holder.caption.setText(getItem(position).getCaption());
-        holder.caption.setTextColor(Color.BLUE);
+        if (getItem(position).getCaption().equals("")){
+
+            holder.caption.setHeight(0);
+            holder.caption.setWidth(0);
+           /* holder.caption .setText("#WelcomeToMyApp");
+            holder.caption.setTextColor(Color.BLUE);*/
+        }else {
+            holder.caption.setText(getItem(position).getCaption());
+            holder.caption.setTextColor(Color.BLUE);
+        }
+
 
         //get the profile image and username
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference();

@@ -421,9 +421,16 @@ public class ViewPostFragment extends Fragment implements View.OnTouchListener {
         UniversalImageLoader.setImage(userProfileAccountSetting.getProfile_photo(), mProfileImage, null, "");
         mUsername.setText(userProfileAccountSetting.getUsername());
         mLikes.setText(mLikesString);
-        mCaption.setText(photo.getCaption());
-        mCaption.setTextColor(Color.BLUE);
 
+        if (photo.getCaption().equals("")){
+            mCaption.setHeight(0);
+            mCaption.setWidth(0);
+           /* holder.caption .setText("#WelcomeToMyApp");
+            holder.caption.setTextColor(Color.BLUE);*/
+        }else {
+            mCaption.setText(photo.getCaption());
+            mCaption.setTextColor(Color.BLUE);
+        }
 
         try {
             if (photo.getComments().size() > 0){
@@ -434,8 +441,6 @@ public class ViewPostFragment extends Fragment implements View.OnTouchListener {
         }catch (NullPointerException e){
             Log.d(TAG, "onCreateView: NullPointerException: " + e.getMessage() );
         }
-
-
 
         mBackArrow.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -120,11 +120,19 @@ public class GalleryFragment extends Fragment {
         directories.add(fileDirectory.CAMERA);
         directories.add(fileDirectory.WHATS_APP);
 
+        int slectionNum = 0;
+        for (int i = 0; i < directoryNames.size(); i++){
+            if (directoryNames.get(i).equals("Camera")){
+                slectionNum = i;
+            }
+        }
+
         ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(),
                 android.R.layout.simple_spinner_item, directoryNames);
 
         adapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
+        spinner.setSelection(slectionNum);
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
