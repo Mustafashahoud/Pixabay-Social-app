@@ -39,6 +39,17 @@
     </string-array>
 
 
+    <string name="search">Search Image</string>
+    <string name="API_KEY">12294933-20224fc74d2113fc2413eafab</string>
+    <string name="no_internet">Sorry, your are offline check your internet connection</string>
+    <string name="error">Sorry, something is wrong</string>
+    <string name="dismiss">DISMISS</string>
+    <string name="no_results">Sorry, No results found for this query</string>
+    <string name="like">Like</string>
+    <string name="favorite">Favorite</string>
+    <string name="comments">Comments</string>
+    <string name="more_details">Do you want to see more details?</string>
+
     <string name="error_missing_permissions">Cannot start without required permissions</string>
 
     <string name="toast_connected">Connected to %s</string>

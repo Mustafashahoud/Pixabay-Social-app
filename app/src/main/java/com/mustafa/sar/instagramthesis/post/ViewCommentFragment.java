@@ -1,7 +1,6 @@
 package com.mustafa.sar.instagramthesis.post;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -58,7 +57,6 @@ public class ViewCommentFragment extends Fragment{
     //vars
     private Photo mPhoto;
     private ArrayList<Comment> mComments;
-
 
     public ViewCommentFragment() {
 

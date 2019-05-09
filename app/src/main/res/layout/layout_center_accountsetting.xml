@@ -6,7 +6,14 @@
         android:background="@color/white"
         android:padding="20dp">
 
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:src="@drawable/socialmedia"
+            android:id="@+id/socialicon"/>
+
         <TextView
+            android:layout_below="@+id/socialicon"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/grey_border_bottom"

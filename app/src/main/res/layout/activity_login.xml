@@ -13,11 +13,17 @@
 
         <ImageView
             android:layout_width="wrap_content"
-            android:layout_height="70dp"
-            android:src="@drawable/instagramlogin"
+            android:layout_height="80sp"
+            android:src="@drawable/socialmedia"
             android:layout_gravity="center_horizontal"
             android:layout_marginBottom="30dp"
             />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="35sp"
+            android:text="Welcome, Please Log in!"
+            android:textColor="@color/colorAccent" />
+
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

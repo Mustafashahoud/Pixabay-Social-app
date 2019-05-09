@@ -51,8 +51,6 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class ProfileFragment extends Fragment {
     private static final String TAG = "ProfileFragment";
 
-
-
     OnGridImageSelectedListener mOnGridImageSelectedListener;
 
     private static final int ACTIVITY_NUM = 4;
@@ -333,7 +331,7 @@ public class ProfileFragment extends Fragment {
     }
 
     private void setColumnGridViewWidth(){
-        int widthGridView = getResources().getDisplayMetrics().widthPixels;//get the widthPixels od the GridView
+        int widthGridView = getActivity().getResources().getDisplayMetrics().widthPixels;//get the widthPixels od the GridView
         int imgWidth = widthGridView/3;
         gridView.setColumnWidth(imgWidth);
     }

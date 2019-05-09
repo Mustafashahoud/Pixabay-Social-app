@@ -1,6 +1,5 @@
 package com.mustafa.sar.instagramthesis.Profile;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -18,9 +17,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.mustafa.sar.instagramthesis.Login.LoginActivity;
 import com.mustafa.sar.instagramthesis.R;
-
-import java.lang.reflect.Array;
-
 import static android.content.ContentValues.TAG;
 
 public class SignOutFragment extends Fragment {
@@ -41,7 +37,6 @@ public class SignOutFragment extends Fragment {
 
         signingOutTv = (TextView) view.findViewById(R.id.signingOutTv);
         signingOutProgress = (ProgressBar) view.findViewById(R.id.signingOutProgress);
-
         btnConfirmSignOut = (Button) view.findViewById(R.id.btnConfirmSignOut);
 
         setupFirebaseAuth();
@@ -104,7 +99,6 @@ public class SignOutFragment extends Fragment {
 
             }
         };
-
     }
 
     @Override
@@ -112,7 +106,6 @@ public class SignOutFragment extends Fragment {
         super.onStart();
         Log.d(TAG, "onStart: checking if the user is logged in or out");
         mAuth.addAuthStateListener(mAuthListener);
-
     }
 
     @Override

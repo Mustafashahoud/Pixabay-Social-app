@@ -65,7 +65,6 @@ public class AccountSettingActivity extends AppCompatActivity {
         setupBottomNavigationView();
         receiveIncomingIntent();
 
-
     }
 
     /**
@@ -92,10 +91,10 @@ public class AccountSettingActivity extends AppCompatActivity {
         if (intent.hasExtra("SelectedImg") || intent.hasExtra("photo_URL_bitmap")) {
                 if (intent.hasExtra("SelectedImg")) {
                     Log.d(TAG, "receiveIncomingIntent: We have a profile photo received the gallery");
-                    firebaseUtilities.uploadPhotoUsingUrlUsingUrl(getString(R.string.profile_photo), "", 0, intent.getStringExtra("SelectedImg"));
+                    firebaseUtilities.uploadPhotoUsingUrl(getString(R.string.profile_photo), "", 0, intent.getStringExtra("SelectedImg"));
                 } else if (intent.hasExtra("photo_URL_bitmap")) {
                     Log.d(TAG, "receiveIncomingIntent: We have a profile photo received from the camera");
-                        firebaseUtilities.uploadPhotoUsingUrlUsingUrl("profile_photo", "", 0,intent.getStringExtra("photo_URL_bitmap"));
+                        firebaseUtilities.uploadPhotoUsingUrl("profile_photo", "", 0,intent.getStringExtra("photo_URL_bitmap"));
                 }
         }
 

@@ -2,7 +2,6 @@ package com.mustafa.sar.instagramthesis.utilities;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
 import java.util.ArrayList;
@@ -12,12 +11,10 @@ public class SectionsStatePagerAdapter extends FragmentStatePagerAdapter {
     public SectionsStatePagerAdapter(FragmentManager fm) {
         super(fm);
     }
-
     ArrayList<Fragment> arrayListFragment = new ArrayList<>();
     HashMap<Fragment, Integer> mFragments = new HashMap<>();
     HashMap<String, Integer> mFragmentNumbers = new HashMap<>();
     HashMap<Integer, String> mFragmentNames = new HashMap<>();
-
 
     public void addFragment(Fragment fragment, String fragmentName) {
         arrayListFragment.add(fragment);
@@ -37,7 +34,6 @@ public class SectionsStatePagerAdapter extends FragmentStatePagerAdapter {
         return arrayListFragment.get(position);
     }
 
-
     /**
      * Returns The Fragment number using the name
      *
@@ -53,7 +49,6 @@ public class SectionsStatePagerAdapter extends FragmentStatePagerAdapter {
             return null;
         }
     }
-
 
     /**
      * Returns The Fragment number using the fragment

@@ -24,7 +24,6 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.mustafa.sar.instagramthesis.Profile.ProfileActivity;
 import com.mustafa.sar.instagramthesis.R;
-//import com.mustafa.sar.instagramthesis.nearbyMessaging.NearbyMessagesActivity;
 import com.mustafa.sar.instagramthesis.models.User;
 import com.mustafa.sar.instagramthesis.utilities.BottomNavigationViewHelper;
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
@@ -33,8 +32,6 @@ import com.mustafa.sar.instagramthesis.utilities.SearchUserListAdapter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-
-import static android.content.Intent.FLAG_ACTIVITY_CLEAR_TOP;
 
 public class SearchActivity extends AppCompatActivity {
 
@@ -57,13 +54,9 @@ public class SearchActivity extends AppCompatActivity {
 
         mSearchParam = (EditText) findViewById(R.id.search);
         mListView = (ListView) findViewById(R.id.listView);
-
-
         hideSoftKeyboard();
         setupBottomNavigationView();
         initTextListener();
-
-
     }
 
     private void initTextListener(){
@@ -97,7 +90,7 @@ public class SearchActivity extends AppCompatActivity {
         //update the users list view
         if(keyword.length() ==0){
 
-        }else{
+        }else {
             DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
             Query query = reference.child(getString(R.string.db_user))
                     .orderByChild(getString(R.string.field_username)).equalTo(keyword);
@@ -113,11 +106,8 @@ public class SearchActivity extends AppCompatActivity {
                         updateUsersList();
                     }
                 }
-
                 @Override
-                public void onCancelled(DatabaseError databaseError) {
-
-                }
+                public void onCancelled(DatabaseError databaseError) {}
             });
         }
     }

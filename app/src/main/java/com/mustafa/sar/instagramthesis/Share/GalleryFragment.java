@@ -35,7 +35,6 @@ public class GalleryFragment extends Fragment {
     private ImageView galleryImage;
     private Spinner spinner;
     private ArrayList<String> imgPaths;
-
     public String selectedImg;
 
     //Constants
@@ -75,7 +74,7 @@ public class GalleryFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Log.d(TAG, "onClick: navigating to the final share screen.");
-                if (isRootTask()){ // True means that we did NOT from EditProfile by pressing change profile Photo
+                if (isRootTask()){ // True means that we did NOT come from EditProfile by pressing change profile Photo
                     Intent selectedImgIntent = new Intent(getActivity(), SelectedImgActivity.class);
                     selectedImgIntent.putExtra("SelectedImg", selectedImg);
                     startActivity(selectedImgIntent);

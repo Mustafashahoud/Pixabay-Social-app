@@ -23,7 +23,6 @@ public class HelperForGettingContentOfDirectories {
             }
         }
         return pathDirArray;
-
     }
 
     /**
@@ -32,7 +31,6 @@ public class HelperForGettingContentOfDirectories {
      * @return All the paths of directories inside the directory {all **Files** contained inside the directory}
      */
     public static ArrayList<String> getFilesPaths(String pathName){
-
         ArrayList<String> pathFileArray = new ArrayList<>();
         File file = new File(pathName); // We've got the file now
         File[] listFiles = file.listFiles(); // Here We've got all files or directories inside the Directory,
@@ -46,7 +44,6 @@ public class HelperForGettingContentOfDirectories {
         return pathFileArray;
 
     }
-
     /**
      * Get directory paths array list.
      * @param pathName the path name

@@ -47,14 +47,9 @@ import java.util.Map;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-/**
- * Created by User on 6/29/2017.
- */
-
 public class ViewProfileFragment extends Fragment {
 
     private static final String TAG = "ProfileFragment";
-
 
     OnGridImageSelectedListener mOnGridImageSelectedListener;
 
@@ -67,8 +62,6 @@ public class ViewProfileFragment extends Fragment {
     private FirebaseDatabase mFirebaseDatabase;
     private DatabaseReference myRef;
 
-
-
     //widgets
     private TextView mPosts, mFollowers, mFollowing, mDisplayName, mUsername, mWebsite, mDescription, mFollow, mUnfollow ;;
     private ProgressBar mProgressBar;
@@ -80,14 +73,11 @@ public class ViewProfileFragment extends Fragment {
     private Context mContext;
     private TextView editProfile;
 
-
     //vars
     private User mUser;
     private int mFollowersCount = 0;
     private int mFollowingCount = 0;
     private int mPostsCount = 0;
-
-
 
     @Nullable
     @Override
@@ -131,12 +121,10 @@ public class ViewProfileFragment extends Fragment {
         getFollowersCount();
         getPostsCount();
 
-
         //setupGridView();
 
         setListenerForHandlingFollowing();
         backArrowListener();
-
 
         return view;
     }
@@ -196,7 +184,6 @@ public class ViewProfileFragment extends Fragment {
                 startActivity(intent);
             }
         });
-
     }
 
     private void backArrowListener(){

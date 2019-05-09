@@ -98,7 +98,7 @@
                 android:id="@+id/speech_bubble"
                 android:layout_toRightOf="@+id/heartLayout"
                 android:layout_marginLeft="10dp"
-                android:src="@drawable/ic_comment"
+                app:srcCompat="@drawable/ic_comment"
                 android:visibility="visible"
                 android:layout_centerVertical="true"/>
 

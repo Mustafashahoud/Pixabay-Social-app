@@ -41,7 +41,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="5sp"
-            android:text="Device Name:"/>
+            android:text="Device Id:"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -56,7 +56,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20sp"
         android:layout_below="@+id/name_layout"
-        android:text="Debug"/>
+        android:text="Inbox"/>
 
     <TextView
         android:id="@+id/debug_text"
@@ -66,8 +66,8 @@
         android:background="#FFFFFF"
         android:fadeScrollbars="false"
         android:gravity="bottom"
-        android:lines="10"
-        android:maxLines="10"
+        android:lines="15"
+        android:maxLines="15"
         android:padding="5dp"
         android:scrollbars="vertical"/>
 

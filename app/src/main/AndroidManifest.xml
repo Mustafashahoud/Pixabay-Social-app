@@ -35,15 +35,12 @@
         <meta-data
             android:name="com.google.android.nearby.messages.API_KEY"
             android:value="AIzaSyAnnCbHy8D4bs4KRcyAmUpw7GMexre5cdQ" />
-        <activity android:name=".Home.HomeActivity"
-            >
+        <activity android:name=".Home.HomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity android:name=".Profile.ProfileActivity"></activity>
         <activity android:name=".Search.SearchActivity"></activity>
         <activity android:name=".Share.ShareActivity"></activity>
@@ -51,16 +48,13 @@
         <activity android:name=".Login.LoginActivity"></activity>
         <activity android:name=".Login.RegisterActivity"></activity>
         <activity android:name=".Share.SelectedImgActivity"></activity>
-        <activity android:name=".nearbyMessaging.MainActivity"></activity>
-        <activity android:name=".nearbyMessaging.VoiceActivity"></activity>
-        <activity android:name=".nearbyMessaging.TextActivity"
+        <activity android:name=".nearbyConnections.MainActivity"></activity>
+        <activity android:name=".nearbyConnections.VoiceActivity"></activity>
+        <activity android:name=".nearbyConnections.TextActivity"
             android:windowSoftInputMode="adjustPan">
         </activity>
-
-
-
-        <!--  <activity android:name=".nearbyMessaging.NearbyMessagesActivity"></activity> -->
-        <!-- <activity android:name=".nearbyMessaging.VoiceActivity"></activity> -->
+        <activity android:name=".Home.DetailActivity"></activity>
+        <activity android:name=".Home.PixabayActivity"></activity>
     </application>
 
 </manifest>

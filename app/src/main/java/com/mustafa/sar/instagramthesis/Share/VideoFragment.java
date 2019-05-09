@@ -14,9 +14,6 @@ import android.widget.Button;
 import com.mustafa.sar.instagramthesis.R;
 import com.mustafa.sar.instagramthesis.utilities.Permission;
 
-import static android.support.v4.provider.FontsContractCompat.FontRequestCallback.RESULT_OK;
-
-
 public class VideoFragment extends Fragment {
     private static final String TAG = "VideoFragment";
     private static final int FRAGMENT_VIDEO_NUM = 2;

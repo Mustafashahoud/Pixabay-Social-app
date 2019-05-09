@@ -1,15 +1,11 @@
 package com.mustafa.sar.instagramthesis.Profile;
 
-import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.widget.ImageView;
-
 import com.google.firebase.auth.FirebaseAuth;
 import com.mustafa.sar.instagramthesis.R;
 import com.mustafa.sar.instagramthesis.models.User;
@@ -21,10 +17,6 @@ public class ProfileActivity extends AppCompatActivity  implements
         OnGridImageSelectedListener, OnCommentSelectedListener {
 
     private static final String TAG = "ProfileActivity";
-    private static final int ACTIVITY_NUM = 4;
-    private Context context = ProfileActivity.this;
-    private ImageView profilePhotoImg;
-
 
     @Override
     public void onCommentSelectedListener(Bundle bundle) {
@@ -35,7 +27,6 @@ public class ProfileActivity extends AppCompatActivity  implements
         //String valueReceived = bundle.getString(ActionListenerInterface.getKeyForStringValue, "This is Default");
 
         if (actionInt == OnCommentSelectedListener.ACTION_KEY){
-
             ViewCommentFragment fragment = new ViewCommentFragment();
             fragment.setArguments(bundle);
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
@@ -54,9 +45,7 @@ public class ProfileActivity extends AppCompatActivity  implements
     }
 
     private void profileContainerMethod(){
-
         Intent intent = getIntent();
-        
         if (intent.hasExtra("calling activity")) {
             User user = intent.getParcelableExtra("user");
             String userID = FirebaseAuth.getInstance().getCurrentUser().getUid();

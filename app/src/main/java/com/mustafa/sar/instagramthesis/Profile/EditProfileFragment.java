@@ -55,9 +55,6 @@ public class EditProfileFragment extends Fragment {
 
     GeneralInfoUserModel mUserSetting;
 
-
-
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

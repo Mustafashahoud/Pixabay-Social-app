@@ -13,8 +13,7 @@ import com.mustafa.sar.instagramthesis.R;
 import com.mustafa.sar.instagramthesis.Search.SearchActivity;
 import com.mustafa.sar.instagramthesis.Share.ShareActivity;
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
-import com.mustafa.sar.instagramthesis.nearbyMessaging.MainActivity;
-import com.mustafa.sar.instagramthesis.nearbyMessaging.VoiceActivity;
+import com.mustafa.sar.instagramthesis.nearbyConnections.MainActivity;
 
 public class BottomNavigationViewHelper {
 

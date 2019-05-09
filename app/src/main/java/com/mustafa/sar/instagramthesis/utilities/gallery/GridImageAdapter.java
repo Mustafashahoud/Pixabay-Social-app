@@ -26,7 +26,6 @@ public class GridImageAdapter extends ArrayAdapter<String> {
     private String append;
     private ArrayList<String> imgURLs;
 
-
     public GridImageAdapter(@NonNull Context context, int resource, String append, @NonNull ArrayList<String> objects) {
         super(context, resource, objects);
         this.mContext = context;
@@ -34,7 +33,6 @@ public class GridImageAdapter extends ArrayAdapter<String> {
         this.layoutResource = resource;
         this.append = append;
         this.imgURLs = objects;
-
     }
 
     private static class ViewHolder {

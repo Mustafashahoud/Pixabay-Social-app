@@ -10,5 +10,5 @@
         </shape>
 
     </item>
-    <item android:drawable="@drawable/vector_heart_white"/>
+    <item android:drawable="@drawable/vector_like_white"/>
 </layer-list>

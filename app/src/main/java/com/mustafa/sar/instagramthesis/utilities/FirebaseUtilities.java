@@ -160,15 +160,14 @@ public class FirebaseUtilities {
     public void createNewUser(String userID, String email, String username, String description,
                               String website, String profile_photo) {
 
-        User user = new User(userID, 1, email, shrinkUsername(username));
+        User user = new User(userID, 1, email, username.toLowerCase());
 
         // Set the Object user attributes to the Database table user_edite_profile_info
-        myRef.child(mContext.getString(R.string.db_user)).child(userID)
-                .setValue(user);
+        myRef.child(mContext.getString(R.string.db_user)).child(userID).setValue(user);
 
         UserProfileAccountSetting userProfileAccountSetting =
                 new UserProfileAccountSetting(description, shrinkUsername(username),
-                        0, 0, 0, profile_photo, username, website, userID);
+                        0, 0, 0, profile_photo, username.toLowerCase(), website, userID);
 
         myRef.child(mContext.getString(R.string.db_userprofileaccount))
                 .child(userID).setValue(userProfileAccountSetting);
@@ -210,7 +209,7 @@ public class FirebaseUtilities {
 
     public static String shrinkUsername(String username) {
 
-        return username.replace(" ", ".");
+        return username.replace(" ", ".").toLowerCase();
 
     }
 
@@ -463,7 +462,7 @@ public class FirebaseUtilities {
      * @param photoCount  the photo count
      * @param url         the url
      */
-    public void uploadPhotoUsingUrlUsingUrl(String picType, final String description, int photoCount, String url) {
+    public void uploadPhotoUsingUrl(String picType, final String description, int photoCount, String url) {
 
         final FileDirectory fd = new FileDirectory(); //fd.STORAGE_PHOTO_PATH --> photos/users/
 

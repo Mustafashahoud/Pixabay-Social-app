@@ -196,7 +196,7 @@ public class RegisterActivity extends AppCompatActivity {
 
                 email = mEmail.getText().toString();
                 password = mPassword.getText().toString();
-                username = mUsername.getText().toString();
+                username = mUsername.getText().toString().toLowerCase();
 
                 if (isEmpty(email) || isEmpty(password) || isEmpty(username)) {
                     mProgressBar.setVisibility(View.VISIBLE);
@@ -227,8 +227,6 @@ public class RegisterActivity extends AppCompatActivity {
 
                      *//*
                     */
-
-
                 }
 
             }

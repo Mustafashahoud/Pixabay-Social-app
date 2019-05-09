@@ -4,7 +4,6 @@ package com.mustafa.sar.instagramthesis.utilities;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
-import android.media.Image;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -26,7 +25,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.mustafa.sar.instagramthesis.Home.HomeActivity;
-import com.mustafa.sar.instagramthesis.Profile.AccountSettingActivity;
 import com.mustafa.sar.instagramthesis.Profile.ProfileActivity;
 import com.mustafa.sar.instagramthesis.R;
 import com.mustafa.sar.instagramthesis.models.Comment;
@@ -47,10 +45,6 @@ import java.util.Locale;
 import java.util.TimeZone;
 
 import de.hdodenhof.circleimageview.CircleImageView;
-
-/**
- * Created by User on 9/22/2017.
- */
 
 public class HomeFeedListAdapter extends ArrayAdapter<Photo> {
     private static final String TAG = "MainfeedListAdapter";
@@ -151,11 +145,10 @@ public class HomeFeedListAdapter extends ArrayAdapter<Photo> {
 
         //set the caption
         if (getItem(position).getCaption().equals("")){
-
-            holder.caption.setHeight(0);
-            holder.caption.setWidth(0);
-           /* holder.caption .setText("#WelcomeToMyApp");
-            holder.caption.setTextColor(Color.BLUE);*/
+/*            holder.caption.setHeight(0);
+            holder.caption.setWidth(0);*/
+            holder.caption .setText("#WelcomeToMyApp");
+            holder.caption.setTextColor(Color.BLUE);
         }else {
             holder.caption.setText(getItem(position).getCaption());
             holder.caption.setTextColor(Color.BLUE);
