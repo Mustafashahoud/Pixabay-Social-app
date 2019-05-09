@@ -10,7 +10,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:957873593395:android:4955962bf9a2e0d7",
         "android_client_info": {
-          "package_name": "com.mustafa.sar.instagramthesis"
+          "package_name": "com.mustafa.sar.pixabayscoialapp"
         }
       },
       "oauth_client": [
@@ -18,7 +18,7 @@
           "client_id": "957873593395-dqng81jme78nb2t07me7umjoaqi3dklq.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.mustafa.sar.instagramthesis",
+            "package_name": "com.mustafa.sar.pixabayscoialapp",
             "certificate_hash": "5f9b5ca98f436a2af4b8597aee4d82a135f764af"
           }
         },

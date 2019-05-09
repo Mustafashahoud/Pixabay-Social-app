@@ -45,7 +45,7 @@
                     android:layout_marginRight="20dp"
                     android:id="@+id/ivEllipses"/>
             </RelativeLayout>
-            <com.mustafa.sar.instagramthesis.utilities.gallery.SquareImageViewForScaling
+            <com.mustafa.sar.pixabayscoialapp.utilities.gallery.SquareImageViewForScaling
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/post_image"

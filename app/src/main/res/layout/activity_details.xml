@@ -7,7 +7,7 @@
     <data>
         <variable
             name="viewmodel"
-            type="com.mustafa.sar.instagramthesis.viewmodels.ImageViewModel"/>
+            type="com.mustafa.sar.pixabayscoialapp.viewmodels.ImageViewModel"/>
     </data>
 
     <RelativeLayout

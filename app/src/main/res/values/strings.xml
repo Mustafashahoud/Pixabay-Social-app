@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">InstagramThesis</string>
+    <string name="app_name">PixabaySocial</string>
     <string name="edit_profile_fragment">Edit Profile</string>
     <string name="sign_out_fragment">Sign Out</string>
 

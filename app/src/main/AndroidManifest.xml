@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.mustafa.sar.instagramthesis">
+    package="com.mustafa.sar.pixabayscoialapp">
 
     <!-- Required for Nearby Connections -->
     <uses-permission android:name="android.permission.BLUETOOTH" />
@@ -27,34 +27,34 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/app_icon"
+        android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/app_icon"
+        android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <meta-data
             android:name="com.google.android.nearby.messages.API_KEY"
             android:value="AIzaSyAnnCbHy8D4bs4KRcyAmUpw7GMexre5cdQ" />
-        <activity android:name=".Home.HomeActivity">
+        <activity android:name="com.mustafa.sar.pixabayscoialapp.Home.HomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Profile.ProfileActivity"></activity>
-        <activity android:name=".Search.SearchActivity"></activity>
-        <activity android:name=".Share.ShareActivity"></activity>
-        <activity android:name=".Profile.AccountSettingActivity"></activity>
-        <activity android:name=".Login.LoginActivity"></activity>
-        <activity android:name=".Login.RegisterActivity"></activity>
-        <activity android:name=".Share.SelectedImgActivity"></activity>
-        <activity android:name=".nearbyConnections.MainActivity"></activity>
-        <activity android:name=".nearbyConnections.VoiceActivity"></activity>
-        <activity android:name=".nearbyConnections.TextActivity"
+        <activity android:name="com.mustafa.sar.pixabayscoialapp.Profile.ProfileActivity"></activity>
+        <activity android:name="com.mustafa.sar.pixabayscoialapp.Search.SearchActivity"></activity>
+        <activity android:name="com.mustafa.sar.pixabayscoialapp.Share.ShareActivity"></activity>
+        <activity android:name="com.mustafa.sar.pixabayscoialapp.Profile.AccountSettingActivity"></activity>
+        <activity android:name="com.mustafa.sar.pixabayscoialapp.Login.LoginActivity"></activity>
+        <activity android:name="com.mustafa.sar.pixabayscoialapp.Login.RegisterActivity"></activity>
+        <activity android:name="com.mustafa.sar.pixabayscoialapp.Share.SelectedImgActivity"></activity>
+        <activity android:name="com.mustafa.sar.pixabayscoialapp.nearbyConnections.MainActivity"></activity>
+        <activity android:name="com.mustafa.sar.pixabayscoialapp.nearbyConnections.VoiceActivity"></activity>
+        <activity android:name="com.mustafa.sar.pixabayscoialapp.nearbyConnections.TextActivity"
             android:windowSoftInputMode="adjustPan">
         </activity>
-        <activity android:name=".Home.DetailActivity"></activity>
-        <activity android:name=".Home.PixabayActivity"></activity>
+        <activity android:name="com.mustafa.sar.pixabayscoialapp.Home.DetailActivity"></activity>
+        <activity android:name="com.mustafa.sar.pixabayscoialapp.Home.PixabayActivity"></activity>
     </application>
 
 </manifest>
