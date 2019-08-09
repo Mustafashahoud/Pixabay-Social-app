@@ -26,6 +26,8 @@ This app is an android application that simulates the real Instagram:
   - Universal Image Loader 
   - Circle Image view
   - Circle progress bar
+  
+  ### Architecture: spaghetti (;
 
 ## App.gif
 
