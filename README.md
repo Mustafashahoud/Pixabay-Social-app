@@ -10,5 +10,11 @@ This app is an android application that simulates the real Instagram:
 - Ability to edit user’s info (Photo, Website, Phone etc.).
 - Searching for users who use this app and viewing their profiles.
 - Implementing liking toggle system and Inserting comments.
-- Providing web gallery for photos on Bixabay website and ability to choose any photo and upload it.
-- Using Nearby Messaging API.
+- Providing a web gallery that retrieves photos from Bixabay.com website and ability to choose any photo and upload it.
+- Using Nearby Messaging API, so that the users can send and receive voice as well as sending text.
+
+
+## App.gif
+
+[![App](https://user-images.githubusercontent.com/33812602/62809635-c23f5980-bafb-11e9-9897-e69c6199bf23.gif)
+](url)
