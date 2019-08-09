@@ -23,11 +23,11 @@ This app is an android application that simulates the real Instagram:
 - Third party libraries
   - Retrofit2
   - Data binding
-  - Universal Image Loader 
+  - Glide
   - Circle Image view
   - Circle progress bar
   
-  ### Architecture: spaghetti (;
+### Architecture: spaghetti (;
 
 ## App.gif
 
