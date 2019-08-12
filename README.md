@@ -1,5 +1,5 @@
 # Bixabay-Social-app
-Developing An android application which simulates the real Instagram and adding some new features such as “Implementing Nearby Connection API” to send text and voice between nearby users in offline manner,  "finding the nearest hospital" as well as Providing search  for photos on Bixabay website and ability to choose any photo and upload it.
+Developing An android application which simulates the real Instagram and adding some new features such as “Implementing Nearby Connection API” to send text and voice between nearby users in offline manner and providing a web gallery so that you can search for photos on Bixabay website and ability to choose any photo and upload it.
 
 ## Description
 This app is an android application that simulates the real Instagram:
