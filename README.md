@@ -22,7 +22,7 @@ This app is an android application that simulates the real Instagram:
     - Storage
 - Third party libraries
   - Retrofit2
-  - Glide
+  - Universal Image Loader
   - Circle Image view
   - Circle progress bar
   
